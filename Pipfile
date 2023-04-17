@@ -12,6 +12,9 @@ flask-migrate = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
 flask-cors = "*"
+fs = "*"
+butler-sdk = "*"
+make-response = "*"
 
 [dev-packages]
 
