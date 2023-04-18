@@ -36,3 +36,79 @@
     transform: rotate(360deg);
   }
 }
+
+.mainPage{
+  width: 80%;
+  margin: auto;
+}
+
+/* LandingPage */
+
+.landingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#selection{
+  font-weight: normal;
+}
+
+.mainButton{
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid black;
+  width: 150px;
+}
+
+.landingPageButtonsDiv{
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CreateAccount */
+
+.setupInstitution{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.createAccountForm{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  /* justify-content: center; */
+}
+
+.formDiv{
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.formInput{
+  border-radius: 8px;
+  border: 1px solid black;
+  width: 85%;
+  height: 20px;
+}
+
+.formLabel{
+  margin-right: 4px;
+  width: 15%;
+  flex-shrink: 0;
+}
+
+.createAccountButton{
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid black;
+  width: 150px;
+  margin: auto;
+}
