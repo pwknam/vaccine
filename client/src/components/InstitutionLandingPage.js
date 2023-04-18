@@ -10,6 +10,10 @@ function InstitutionLandingPage() {
     navigate({ pathname: "/institutionCreateAccount" });
   }
 
+  function handleLoginPage() {
+    navigate({ pathname: "/institutionLogin" });
+  }
+
   return (
     <div>
       <div className="landingPage">
@@ -20,7 +24,9 @@ function InstitutionLandingPage() {
             Create Account
           </button>
           <p>or</p>
-          <button className="mainButton">Login</button>
+          <button className="mainButton" onClick={handleLoginPage}>
+            Login
+          </button>
         </div>
       </div>
     </div>
