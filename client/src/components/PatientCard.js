@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-function PatientCard() {
+function PatientCard({ patientData }) {
   const navigate = useNavigate();
 
   function handlePatientDashboard() {
@@ -11,8 +11,8 @@ function PatientCard() {
 
   return (
     <div className="patientCard" onClick={handlePatientDashboard}>
-      <p>Patient Name</p>
-      <p>DL# 12345678</p>
+      <p>{patientData.name}</p>
+      <p>{patientData.dl_number}</p>
     </div>
   );
 }

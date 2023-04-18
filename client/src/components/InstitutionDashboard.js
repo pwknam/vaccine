@@ -4,11 +4,23 @@ import PatientCard from "./PatientCard";
 import { useNavigate } from "react-router-dom";
 
 function InstitutionDashboard({ userInfo }) {
+  // console.log(userInfo.patients[0].patients.dl_number);
   const navigate = useNavigate();
 
   function handleNewPatientForm() {
     navigate({ pathname: "/newPatientForm" });
   }
+
+  const renderPatientCards = userInfo.patients.map((patient) => {
+    return (
+      <div className="cardItem">
+        <PatientCard
+          key={patient.patients.dl_number}
+          patientData={patient.patients}
+        />
+      </div>
+    );
+  });
 
   return (
     <div className="institutionDashboardPage">
@@ -23,32 +35,7 @@ function InstitutionDashboard({ userInfo }) {
           className="searchBar"
         ></input>
       </div>
-      <div className="patientCardGrid">
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-        <div className="cardItem">
-          <PatientCard />
-        </div>
-      </div>
+      <div className="patientCardGrid">{renderPatientCards}</div>
     </div>
   );
 }
