@@ -16,6 +16,7 @@ class Vaccination(db.Model, SerializerMixin):
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     issuer_id = db.Column(db.Integer, db.ForeignKey('issuers.id'))
     vaccine_id = db.Column(db.Integer, db.ForeignKey('vaccines.id'))
+    expiration_date = db.Column(db.String)
     visibility = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -27,7 +28,7 @@ class Patient(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    id_number = db.Column(db.Integer)
+    dl_number = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -88,7 +89,6 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ('-patient', '-issuer', '-validator', '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
     username = db.Column(db.String, unique=True)
     _password_hash = db.Column(db.String)
     role = db.Column(db.String)
