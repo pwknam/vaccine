@@ -48,7 +48,7 @@ class SignupIssuer(Resource):
             new_user.password_hash = data['password']
             db.session.add(new_user)
             db.session.commit()
-            new_validator = Issuer(name=data['username'], user_id=new_user.id, institution_type=data['institution_type'], verified=False)
+            new_validator = Issuer(name=data['username'], user_id=new_user.id, institution_type='Medical', verified=False)
             db.session.add(new_validator)
             db.session.commit()
         except ValueError as e:
@@ -65,7 +65,14 @@ class Login(Resource):
         if user.authenticate(data['password']):
             session['user_id'] = user.id
             session['user_role'] = user.role
-            return user.to_dict(), 200
+            if user.role == 'Issuer':
+                issuer = user.issuer
+                patients = []
+                for v in issuer.vaccinations:
+                    if v.to_dict(only=('patients.name', 'patients.dl_number')) not in patients:
+                        patients.append(v.to_dict(only=('patients.name', 'patients.dl_number')))
+                user.patients = patients
+                return make_response(jsonify(user.to_dict(rules=('patients',))), 200)
         return make_response(jsonify({'error': 'Invalid username or password.'}), 401)
 
 api.add_resource(Login, '/login')
@@ -84,10 +91,10 @@ api.add_resource(Vaccines, '/vaccines')
 
 class PatientByID(Resource):
     def get(self, id):
-        patient = Patient.query.filter(Patient.id_number == id).first()
+        patient = Patient.query.filter(Patient.dl_number == id).first()
         if not patient:
             return make_response(jsonify({'error': 'Patient not found.'}), 404)
-        return make_response(jsonify(patient.to_dict(rules=('vaccinations', ))), 200)
+        return make_response(jsonify(patient.to_dict(only=('vaccinations.expiration_date', 'id', 'vaccinations.issuers.name', 'vaccinations.vaccines.name','vaccinations.visibility', 'vaccinations.id'))), 200)
     
 api.add_resource(PatientByID, '/patients/<int:id>')
     
@@ -100,7 +107,7 @@ class Patients(Resource):
     def post(self):
         data = request.get_json()
         try:
-            patient = Patient(name=data['name'], id_number=data['id_number'])
+            patient = Patient(name=data['name'], id_number=data['dl_number'])
             db.session.add(patient)
             db.session.commit()
         except ValueError as e:
