@@ -1,4 +1,5 @@
 import "../App.css";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import LandingPage from "./LandingPage";
@@ -12,6 +13,11 @@ import SearchPage from "./SearchPage";
 import ValidatorDashboard from "./ValidatorDashboard";
 
 function App() {
+  const [user, setUser] = useState({});
+
+  function setNewUser(user) {
+    setUser(user);
+  }
   return (
     <div className="mainPage">
       <Routes>
@@ -21,11 +27,17 @@ function App() {
           path="/institutionLandingPage"
           element={<InstitutionLandingPage />}
         />
-        <Route path="/institutionCreateAccount" element={<CreateAccount />} />
-        <Route path="/institutionLogin" element={<Login />} />
+        <Route
+          path="/institutionCreateAccount"
+          element={<CreateAccount setNewUser={setNewUser} />}
+        />
+        <Route
+          path="/institutionLogin"
+          element={<Login setNewUser={setNewUser} />}
+        />
         <Route
           path="/institutionDashboard"
-          element={<InstitutionDashboard />}
+          element={<InstitutionDashboard userInfo={user} />}
         />
         <Route path="/newPatientForm" element={<NewPatientForm />} />
         <Route path="/patientDashboard" element={<PatientDashboard />} />
