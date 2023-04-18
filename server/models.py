@@ -86,7 +86,7 @@ class Validator(db.Model, SerializerMixin):
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-patient', '-issuer', '-validator', '-created_at', '-updated_at')
+    serialize_rules = ('-patient', '-issuer', '-validator', '-created_at', '-updated_at', '-_password_hash',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
@@ -95,9 +95,9 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default= db.func.now())
     updated_at = db.Column(db.DateTime, onupdate= db.func.now())
 
-    patient = db.relationship('Patient', backref='users', lazy=True, uselist=False)
-    issuer = db.relationship('Issuer', backref='users', lazy=True, uselist=False)
-    validator = db.relationship('Validator', backref='users', lazy=True, uselist=False)
+    patient = db.relationship('Patient', backref='users', uselist=False)
+    issuer = db.relationship('Issuer', backref='users',  uselist=False)
+    validator = db.relationship('Validator', backref='users',  uselist=False)
 
     @validates('username')
     def validates_username(self, key, username):
