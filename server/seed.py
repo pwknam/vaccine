@@ -56,7 +56,7 @@ with app.app_context():
     vacc5 = Vaccination(patient_id=p1.id, issuer_id=i1.id, vaccine_id=vac5.id, expiration_date='12/31/2025',visibility=True)
     vacc6 = Vaccination(patient_id=p1.id, issuer_id=i1.id, vaccine_id=vac6.id, expiration_date='12/31/2025',visibility=True)
     vacc7 = Vaccination(patient_id=p2.id, issuer_id=i2.id, vaccine_id=vac1.id, expiration_date='12/31/2025',visibility=True)
-    vacc8 = Vaccination(patient_id=p2.id, issuer_id=i2.id, vaccine_id=vac2.id, expiration_date='12/31/2025',visibility=True)
+    vacc8 = Vaccination(patient_id=p2.id, issuer_id=i2.id, vaccine_id=vac2.id, expiration_date='12/31/2025',visibility=False)
     vacc9 = Vaccination(patient_id=p2.id, issuer_id=i2.id, vaccine_id=vac3.id, expiration_date='12/31/2025',visibility=True)
     vacc10= Vaccination(patient_id=p2.id, issuer_id=i2.id, vaccine_id=vac4.id, expiration_date='12/31/2025',visibility=True)
     vacc11= Vaccination(patient_id=p2.id, issuer_id=i2.id, vaccine_id=vac5.id, expiration_date='12/31/2025',visibility=True)
