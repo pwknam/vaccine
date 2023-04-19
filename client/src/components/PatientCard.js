@@ -2,10 +2,11 @@ import React from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-function PatientCard({ patientData }) {
+function PatientCard({ patientData, patientDL }) {
   const navigate = useNavigate();
 
   function handlePatientDashboard() {
+    patientDL(patientData.dl_number);
     navigate({ pathname: "/patientDashboard" });
   }
 
