@@ -35,66 +35,67 @@ function App() {
 
   function goHome() {
     navigate({ pathname: "/" });
-    function setSearch(val) {
-      setValidatorDL(val);
-    }
-    return (
-      <div className="mainPage">
-        <button onClick={goHome}>Go Home</button>
-        <Routes>
-          <Route exact path="/" element={<LandingPage />} />
-
-          <Route
-            path="/institutionLandingPage"
-            element={<InstitutionLandingPage />}
-          />
-          <Route
-            path="/institutionCreateAccount"
-            element={<CreateAccount setNewUser={setNewUser} />}
-          />
-          <Route
-            path="/institutionLogin"
-            element={<Login setNewUser={setNewUser} />}
-          />
-          <Route
-            path="/institutionDashboard"
-            element={
-              <InstitutionDashboard
-                userInfo={user}
-                DL={setPatientDL}
-                setPatient={setPatient}
-                patients={patients}
-              />
-            }
-          />
-          <Route
-            path="/newPatientForm"
-            element={<NewPatientForm setNewPatient={setNewPatient} />}
-          />
-          <Route
-            path="/patientDashboard"
-            element={
-              <PatientDashboard DL={patientDL} user={user} patient={patient} />
-            }
-          />
-          <Route path="/patientLandingPage" element={<PatientLandingPage />} />
-          <Route path="/activateAccount" element={<ActivateAccount />} />
-          <Route
-            path="/patientVaccineSummary"
-            element={<PatientVaccineSummary />}
-          />
-          <Route
-            path="/searchPage"
-            element={<SearchPage setSearch={setSearch} dl={validatorDL} />}
-          />
-          <Route
-            path="/validatorDashboard"
-            element={<ValidatorDashboard dl={validatorDL} user={user} />}
-          />
-        </Routes>
-      </div>
-    );
   }
+
+  function setSearch(val) {
+    setValidatorDL(val);
+  }
+  return (
+    <div className="mainPage">
+      <button onClick={goHome}>Go Home</button>
+      <Routes>
+        <Route exact path="/" element={<LandingPage />} />
+
+        <Route
+          path="/institutionLandingPage"
+          element={<InstitutionLandingPage />}
+        />
+        <Route
+          path="/institutionCreateAccount"
+          element={<CreateAccount setNewUser={setNewUser} />}
+        />
+        <Route
+          path="/institutionLogin"
+          element={<Login setNewUser={setNewUser} />}
+        />
+        <Route
+          path="/institutionDashboard"
+          element={
+            <InstitutionDashboard
+              userInfo={user}
+              DL={setPatientDL}
+              setPatient={setPatient}
+              patients={patients}
+            />
+          }
+        />
+        <Route
+          path="/newPatientForm"
+          element={<NewPatientForm setNewPatient={setNewPatient} />}
+        />
+        <Route
+          path="/patientDashboard"
+          element={
+            <PatientDashboard DL={patientDL} user={user} patient={patient} />
+          }
+        />
+        <Route path="/patientLandingPage" element={<PatientLandingPage />} />
+        <Route path="/activateAccount" element={<ActivateAccount />} />
+        <Route
+          path="/patientVaccineSummary"
+          element={<PatientVaccineSummary />}
+        />
+        <Route
+          path="/searchPage"
+          element={<SearchPage setSearch={setSearch} dl={validatorDL} />}
+        />
+        <Route
+          path="/validatorDashboard"
+          element={<ValidatorDashboard dl={validatorDL} user={user} />}
+        />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
