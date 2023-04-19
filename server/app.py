@@ -4,7 +4,9 @@ from flask_migrate import Migrate
 from flask_restful import Api, Resource
 from models import db
 from butler import Client
-
+from PIL import Image
+import io
+import base64
 
 
 app = Flask(__name__)
@@ -19,10 +21,16 @@ api = Api(app)
 
 class Upload(Resource):
     def post(self):
-        data = request.get_json()
+        image_data = request.get_json()
         # Write image data to file
+        image_data = image_data['image'].split(",")[-1]
+        decoded_data = base64.b64decode(image_data)
+        image = Image.open(io.BytesIO(decoded_data))
+        # image.show()
+        # print(image_data)
         with open('./storage/ocr_image.jpeg', 'wb') as f:
-            f.write(request.data)
+            f.write(decoded_data)
+
         
         # Make sure to first install the SDK using 'pip install butler-sdk'
  
@@ -39,8 +47,7 @@ class Upload(Resource):
         for field in formFields:
             if field['fieldName'] == "Document Number":
                 license = field['value']
-        # license ? 
-        response = license if license else "No License found"
+        response = {"error": "No License found"} if not license else {"license": license}
         return make_response(response, 200)
 
         # const capturedImage = async (req, res, next) => {
