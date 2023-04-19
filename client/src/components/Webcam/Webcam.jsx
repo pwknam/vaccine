@@ -7,8 +7,8 @@ import { Butler } from 'butler-sdk';
 // const WebcamComponent = (image, setImage) => <Webcam />;
 
 const videoConstraints = {
-    width: 220,
-    height: 200,
+    width: 400,
+    height: 400,
     facingMode: "user"
 };
 
@@ -32,10 +32,10 @@ export const WebcamCapture = ({image, setImage}) => {
 
                 {image == '' ? <Webcam
                     audio={false}
-                    height={200}
+                    height={400}
                     ref={webcamRef}
                     screenshotFormat="image/jpeg"
-                    width={220}
+                    width={420}
                     videoConstraints={videoConstraints}
                 /> : <img src={image} />}
             </div>

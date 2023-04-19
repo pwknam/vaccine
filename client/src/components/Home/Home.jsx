@@ -5,6 +5,7 @@ import { WebcamCapture} from '../Webcam/Webcam'
 
 const Home = () => {
     const [image, setImage] = useState('');
+    const[driverslicense, setDriverslicense] = useState('');
 
     const handleSubmit= (e) => {
         // alert("Form submitted");
@@ -24,6 +25,7 @@ const Home = () => {
           })
           .then(data => {        
             console.log(data);
+            setDriverslicense(data.license)
           })
           .catch(error => {
             console.log(error);
@@ -76,7 +78,9 @@ const Home = () => {
                         <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} /> */}
                         <button type="submit" id="login-button" onClick={(e) => handleSubmit(e)}>Submit</button>
                     </form>
+                    {driverslicense && <h1>{driverslicense}</h1>}    
                 </div>
+                 
             </div>
         </div>
     )
