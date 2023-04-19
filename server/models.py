@@ -16,6 +16,7 @@ class Vaccination(db.Model, SerializerMixin):
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     issuer_id = db.Column(db.Integer, db.ForeignKey('issuers.id'))
     vaccine_id = db.Column(db.Integer, db.ForeignKey('vaccines.id'))
+    expiration_date = db.Column(db.String)
     visibility = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -27,7 +28,7 @@ class Patient(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    id_number = db.Column(db.Integer)
+    dl_number = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -85,19 +86,18 @@ class Validator(db.Model, SerializerMixin):
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-patient', '-issuer', '-validator', '-created_at', '-updated_at')
+    serialize_rules = ('-patient', '-issuer', '-validator', '-created_at', '-updated_at', '-_password_hash',)
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
     username = db.Column(db.String, unique=True)
     _password_hash = db.Column(db.String)
     role = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default= db.func.now())
     updated_at = db.Column(db.DateTime, onupdate= db.func.now())
 
-    patient = db.relationship('Patient', backref='users', lazy=True, uselist=False)
-    issuer = db.relationship('Issuer', backref='users', lazy=True, uselist=False)
-    validator = db.relationship('Validator', backref='users', lazy=True, uselist=False)
+    patient = db.relationship('Patient', backref='users', uselist=False)
+    issuer = db.relationship('Issuer', backref='users',  uselist=False)
+    validator = db.relationship('Validator', backref='users',  uselist=False)
 
     @validates('username')
     def validates_username(self, key, username):
