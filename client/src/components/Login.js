@@ -27,9 +27,16 @@ function Login({ setNewUser }) {
       .then((data) => {
         console.log(data);
         setNewUser(data);
-        navigate(
-          `${data.role === "Issuer" ? "/institutionDashboard" : "/searchPage"}`
-        );
+        // navigate(
+        //   `${data.role === "Issuer" ? "/institutionDashboard" : "/searchPage"}`
+        // );
+        if (data.role === "Issuer") {
+          navigate({ pathname: "/institutionDashboard" });
+        } else if (data.role === "Validator") {
+          navigate({ pathname: "/searchPage" });
+        } else if (data.role === "Patient") {
+          navigate({ pathname: "/PatientVaccineSummary" });
+        }
       });
   }
 
