@@ -1,6 +1,6 @@
 import "../App.css";
 import { useNavigate } from "react-router-dom";
-import Home from "./Home/Home";
+// import Home from "./Home/Home";
 
 function SearchPage() {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function SearchPage() {
           placeholder="Drivers License Number"
         ></input>
         {/* IF YOU WANT TO GET RID OF THE UGLY OCR THEN COMMENT OUT THE HOME COMPONENT - I NEED TO RENAME ANYWAYS */}
-        <Home/>
+        {/* <Home/> */}
         <button className="createAccountButton">Search</button>
       </form>
     </div>

@@ -14,6 +14,7 @@ import ValidatorDashboard from "./ValidatorDashboard";
 
 function App() {
   const [user, setUser] = useState({});
+  const [patientDL, setPatientDL] = useState({});
 
   function setNewUser(user) {
     setUser(user);
@@ -37,10 +38,13 @@ function App() {
         />
         <Route
           path="/institutionDashboard"
-          element={<InstitutionDashboard userInfo={user} />}
+          element={<InstitutionDashboard userInfo={user} DL={setPatientDL} />}
         />
         <Route path="/newPatientForm" element={<NewPatientForm />} />
-        <Route path="/patientDashboard" element={<PatientDashboard />} />
+        <Route
+          path="/patientDashboard"
+          element={<PatientDashboard DL={patientDL} />}
+        />
         <Route path="/searchPage" element={<SearchPage />} />
         <Route path="/validatorDashboard" element={<ValidatorDashboard />} />
       </Routes>
