@@ -25,6 +25,7 @@ function Login({ setNewUser }) {
     })
       .then((r) => r.json())
       .then((data) => {
+        console.log(data);
         setNewUser(data);
         navigate(
           `${data.role === "Issuer" ? "/institutionDashboard" : "/searchPage"}`

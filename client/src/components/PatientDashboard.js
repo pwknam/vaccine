@@ -1,20 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import VaccineRowIssuer from "./VaccineRowIssuer";
 
-function PatientDashboard({ DL }) {
-  console.log(DL);
+function PatientDashboard({ DL, user, patient }) {
+  const [patientData, setPatientData] = useState({});
+  const [vaccinations, setVaccinations] = useState([]);
   const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  console.log(patient);
 
   function handleDashboardNavigate() {
     navigate({ pathname: "/institutionDashboard" });
   }
 
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5555/patients/${DL}/${user.role}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setPatientData(data);
+        setVaccinations(data.vaccinations);
+      });
+  }, [DL, user]);
+
+  console.log(user.id);
+
+  const renderVaccines = vaccinations
+    ? vaccinations.map((vaccination) => {
+        return (
+          <VaccineRowIssuer key={vaccination.name} vaccineData={vaccination} />
+        );
+      })
+    : null;
+  function handleNewVaccine(e) {
+    console.log(user.issuer_id);
+    e.preventDefault();
+    fetch(`http://127.0.0.1:5555/vaccinations`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        expiration_date: date,
+        issuer_id: user.issuer_id,
+        patient_id: patient.id,
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        setVaccinations([...vaccinations, data]);
+      });
+  }
+
   return (
     <div>
       <div className="topBar">
-        <h1>Patient Name</h1>
+        <h1>{patientData.name}</h1>
         <button onClick={handleDashboardNavigate}>Dashboard</button>
       </div>
       <div className="tableContainer">
@@ -31,22 +75,32 @@ function PatientDashboard({ DL }) {
                 <h3>Valid Through</h3>
               </th>
             </tr>
-            <VaccineRowIssuer />
-            <VaccineRowIssuer />
-            <VaccineRowIssuer />
+            {renderVaccines}
           </tbody>
         </table>
       </div>
       <div>
         <h2>Add New Vaccine</h2>
-        <form className="createAccountForm">
+        <form className="createAccountForm" onSubmit={handleNewVaccine}>
           <div className="formDiv">
             <label className="formLabel">Vaccine Name</label>
-            <input type="text" className="formInput"></input>
+            <input
+              type="text"
+              className="formInput"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              value={name}
+            ></input>
           </div>
           <div className="formDiv">
             <label className="formLabel">Expiration Date</label>
-            <input type="text" className="formInput"></input>
+            <input
+              type="text"
+              className="formInput"
+              onChange={(e) => setDate(e.target.value)}
+              value={date}
+            ></input>
           </div>
 
           <button className="createAccountButton">Add Vaccine</button>

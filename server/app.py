@@ -1,11 +1,15 @@
 from flask import request, make_response, jsonify, session
 from flask_restful import Resource
-from models import Issuer, Patient, Vaccine, Vaccination, User, Validator
+from models import Issuer, Patient, Vaccination, User, Validator
 from config import app, db, api
 # from butler import Client
 # from PIL import Image
 import io
 import base64
+
+app.secret_key = b'kyushikiscool'
+
+
 class SignupPatient(Resource):
     def post(self, id):
         data = request.get_json()
@@ -23,9 +27,11 @@ class SignupPatient(Resource):
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}), 422)
         return make_response(jsonify(new_user.to_dict()), 201)
-    
+
+
 api.add_resource(SignupPatient, '/signup_patient/<int:id>')
-    
+
+
 class SignupValidator(Resource):
     def post(self):
         data = request.get_json()
@@ -34,7 +40,8 @@ class SignupValidator(Resource):
             new_user.password_hash = data['password']
             db.session.add(new_user)
             db.session.commit()
-            new_validator = Validator(name=data['username'], user_id=new_user.id)
+            new_validator = Validator(
+                name=data['username'], user_id=new_user.id)
             db.session.add(new_validator)
             db.session.commit()
             session['user_id'] = new_user.id
@@ -42,8 +49,10 @@ class SignupValidator(Resource):
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}))
         return make_response(jsonify(new_user.to_dict()), 201)
-    
+
+
 api.add_resource(SignupValidator, '/signup_validator')
+
 
 class SignupIssuer(Resource):
     def post(self):
@@ -51,17 +60,21 @@ class SignupIssuer(Resource):
         try:
             new_user = User(username=data['username'], role='Issuer')
             new_user.password_hash = data['password']
+            new_user.patients = []
             db.session.add(new_user)
             db.session.commit()
-            new_validator = Issuer(name=data['username'], user_id=new_user.id, institution_type='Medical', verified=False)
+            new_validator = Issuer(
+                name=data['username'], user_id=new_user.id, institution_type='Medical', verified=False)
             db.session.add(new_validator)
             db.session.commit()
+            new_user.issuer_id = new_validator.id
             session['user_id'] = new_user.id
             session['user_role'] = new_user.role
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}))
-        return make_response(jsonify(new_user.to_dict()), 201)
-    
+        return make_response(jsonify(new_user.to_dict(rules=('patients', 'issuer_id'))), 201)
+
+
 api.add_resource(SignupIssuer, '/signup_issuer')
 
 
@@ -70,8 +83,10 @@ class Login(Resource):
         data = request.get_json()
         user = User.query.filter(User.username == data['username']).first()
         if user.authenticate(data['password']):
+            # print(user.role, 'line somethin')
             session['user_id'] = user.id
             session['user_role'] = user.role
+            print(session.get('user_role'), 'wpposadf')
             if user.role == 'Issuer':
                 issuer = user.issuer
                 patients = []
@@ -79,69 +94,98 @@ class Login(Resource):
                 for v in issuer.vaccinations:
                     if v.patients.dl_number not in dl_numbers:
                         patients.append({
-                            'name' : v.patients.name,
-                            'dl_number' : v.patients.dl_number
+                            'name': v.patients.name,
+                            'dl_number': v.patients.dl_number,
+                            'id': v.patients.id
                         })
                         dl_numbers.add(v.patients.dl_number)
                 user.patients = patients
-                return make_response(jsonify(user.to_dict(rules=('patients',))), 200)
+                user.issuer_id = issuer.id
+
+                return make_response(jsonify(user.to_dict(rules=('patients', 'issuer_id'))), 200)
             elif user.role == 'Patient':
-                return make_response(jsonify({'name': user.patient.name, 'dl_number': user.patient.dl_number}), 200)
+                return make_response(jsonify({'name': user.patient.name, 'dl_number': user.patient.dl_number, "role": session["user_role"]}), 200)
             elif user.role == 'Validator':
-                return make_response(jsonify(user.validator.to_dict(only=('name','id'))),200)
+                user.validator.role = user.validator.users.role
+                return make_response(jsonify(user.validator.to_dict(only=('name', 'id', 'role'))), 200)
         return make_response(jsonify({'error': 'Invalid username or password.'}), 401)
 
+
 api.add_resource(Login, '/login')
-class Vaccines(Resource):
+
+
+# class Vaccines(Resource):
+#     def post(self):
+#         data = request.get_json()
+#         try:
+#             vaccine = Vaccine(
+#                 name=data['name'])
+#             db.session.add(vaccine)
+#             db.session.commit()
+#         except ValueError as e:
+#             return make_response(jsonify({'errors': [str(e)]}), 422)
+#         return make_response(jsonify(vaccine.to_dict()), 201)
+
+
+# api.add_resource(Vaccines, '/vaccines')
+
+
+class Vaccinations(Resource):
     def post(self):
         data = request.get_json()
         try:
-            vaccine = Vaccine(name=data['name'])
-            db.session.add(vaccine)
+            vaccination = Vaccination(
+                name=data['name'], expiration_date=data['expiration_date'], patient_id=data['patient_id'], issuer_id=data['issuer_id'], visibility=False)
+            db.session.add(vaccination)
             db.session.commit()
         except ValueError as e:
-            return make_response(jsonify({'errors': [str(e)]}),422)
-        return make_response(jsonify(vaccine.to_dict()), 201)
-    
-api.add_resource(Vaccines, '/vaccines')
+            return make_response(jsonify({'errors': [str(e)]}), 422)
+        return make_response(jsonify(vaccination.to_dict()))
+
+
+api.add_resource(Vaccinations, '/vaccinations')
+
 
 class PatientByID(Resource):
-    def get(self, id):
+    def get(self, id, user_role):
         patient = Patient.query.filter(Patient.dl_number == id).first()
+        print(f"user role: {session.get('user_role')}")
+        print(f"user id {session.get('user_id')}")
         if not patient:
             return make_response(jsonify({'error': 'Patient not found.'}), 404)
-        
-        if session['user_role'] == 'Validator':
-            patient.vaccinations = [v for v in Vaccination.query.filter(Vaccination.patient_id == patient.id) if v.visibility == True]
+        if user_role == 'Validator':
+            patient.vaccinations = [v for v in Vaccination.query.filter(
+                Vaccination.patient_id == patient.id) if v.visibility == True]
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
-                v.vaccine_name = v.vaccines.name
-            return make_response(jsonify(patient.to_dict(only=('name','vaccinations.expiration_date', 'vaccinations.vaccine_name', 'vaccinations.issuer_name'))), 200)
-        elif session['user_role'] == 'Patient':
-            patient.vaccinations = [v for v in Vaccination.query.filter(Vaccination.patient_id == patient.id)]
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name'))), 200)
+        elif user_role == 'Patient':
+            patient.vaccinations = [v for v in Vaccination.query.filter(
+                Vaccination.patient_id == patient.id)]
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
-                v.vaccine_name = v.vaccines.name
-            return make_response(jsonify(patient.to_dict(only=('name','vaccinations.expiration_date', 'vaccinations.vaccine_name', 'vaccinations.issuer_name', 'vaccinations.visibility'))), 200)
-        elif session['user_role'] == 'Issuer':
-            patient.vaccinations = [v for v in Vaccination.query.filter(Vaccination.patient_id == patient.id)]
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'vaccinations.visibility'))), 200)
+        elif user_role == 'Issuer':
+            patient.vaccinations = [v for v in Vaccination.query.filter(
+                Vaccination.patient_id == patient.id)]
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
-                v.issuer_name = v.issuers.name
-                v.vaccine_name = v.vaccines.name
-            return make_response(jsonify(patient.to_dict(only=('name','vaccinations.expiration_date', 'vaccinations.vaccine_name', 'vaccinations.issuer_name'))), 200)  
+                # v.issuer_name = v.issuers.name
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuers.name'))), 200)
         return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
-api.add_resource(PatientByID, '/patients/<int:id>')
-    
+
+api.add_resource(PatientByID, '/patients/<int:id>/<string:user_role>')
+
+
 class Patients(Resource):
     def get(self):
         # make get patients only available to specific role
         patients = [p.to_dict() for p in Patients.query.all()]
         return make_response(jsonify(patients), 200)
-    
+
     def post(self):
         data = request.get_json()
         try:
@@ -149,9 +193,10 @@ class Patients(Resource):
             db.session.add(patient)
             db.session.commit()
         except ValueError as e:
-            return make_response(jsonify({'errors': [str(e)]}),422)
+            return make_response(jsonify({'errors': [str(e)]}), 422)
         return make_response(jsonify(patient.to_dict(only=('name', 'id', 'dl_number'))), 201)
-    
+
+
 api.add_resource(Patients, '/patients')
 
 # class Upload(Resource):
@@ -166,9 +211,9 @@ api.add_resource(Patients, '/patients')
 #         with open('./storage/ocr_image.jpeg', 'wb') as f:
 #             f.write(decoded_data)
 
-        
+
 #         # Make sure to first install the SDK using 'pip install butler-sdk'
- 
+
 
 #         # Specify variables for use in script below
 #         api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjkxNDc5MTMzMjAzMDMzOTY2OSIsImVtYWlsIjoibWNob2k0MTk0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE2ODE2NjkwNzU5OTZ9.zYaCZMVgMnUWurL7CGa0JGrR29CIolKRlSvgqDZjTTU'
@@ -189,7 +234,6 @@ api.add_resource(Patients, '/patients')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-    
 
 
 if __name__ == '__main__':

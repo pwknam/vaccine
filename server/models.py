@@ -6,23 +6,25 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from config import bcrypt, db
 
-    
+
 class Vaccination(db.Model, SerializerMixin):
     __tablename__ = 'vaccinations'
 
-    serialize_rules = ('-patient', '-issuer', '-vaccine', '-created_at', '-updated_at')
+    serialize_rules = ('-patient', '-issuer',
+                       '-created_at', '-updated_at')
 
     id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'))
     issuer_id = db.Column(db.Integer, db.ForeignKey('issuers.id'))
-    vaccine_id = db.Column(db.Integer, db.ForeignKey('vaccines.id'))
+    name = db.Column(db.String)
     expiration_date = db.Column(db.String)
     visibility = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+
 class Patient(db.Model, SerializerMixin):
-    __tablename__  = 'patients'
+    __tablename__ = 'patients'
 
     serialize_rules = ('-created_at', '-updated_at', '-vaccinations', '-user')
 
@@ -33,15 +35,15 @@ class Patient(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-
     vaccinations = db.relationship('Vaccination', backref='patients')
     issuers = association_proxy('vaccinations', 'issuer')
-    vaccines = association_proxy('vaccinations', 'vaccine')
+    # vaccines = association_proxy('vaccinations', 'vaccine')
+
 
 class Issuer(db.Model, SerializerMixin):
     __tablename__ = 'issuers'
 
-    serialize_rules= ('-vaccinations', '-created_at', '-updated_at', '-user')
+    serialize_rules = ('-vaccinations', '-created_at', '-updated_at', '-user')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -53,24 +55,24 @@ class Issuer(db.Model, SerializerMixin):
 
     vaccinations = db.relationship('Vaccination', backref='issuers')
     patients = association_proxy('vaccinations', 'patient')
-    vaccines = association_proxy('vaccinations', 'vaccine')
+    # vaccines = association_proxy('vaccinations', 'vaccine')
 
-class Vaccine(db.Model, SerializerMixin):
-    __tablename__ = 'vaccines'
+# class Vaccine(db.Model, SerializerMixin):
+#     __tablename__ = 'vaccines'
 
-    serialize_rules = ('-vaccinations', '-created_at', '-updated_at')
+#     serialize_rules = ('-vaccinations', '-created_at', '-updated_at')
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String)
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    vaccinations = db.relationship('Vaccination', backref='vaccines')
-    patients = association_proxy('vaccinations', 'patient')
-    issuers = association_proxy('vaccinations', 'issuer')
+#     vaccinations = db.relationship('Vaccination', backref='vaccines')
+#     patients = association_proxy('vaccinations', 'patient')
+#     issuers = association_proxy('vaccinations', 'issuer')
 
+    # logic behind conditional rendering for vaccine visibility is to
 
-    # logic behind conditional rendering for vaccine visibility is to 
 
 class Validator(db.Model, SerializerMixin):
     __tablename__ = 'validators'
@@ -80,20 +82,22 @@ class Validator(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    created_at = db.Column(db.DateTime, server_default= db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate= db.func.now())
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-patient', '-issuer', '-validator', '-created_at', '-updated_at', '-_password_hash',)
+    serialize_rules = ('-patient', '-issuer', '-validator',
+                       '-created_at', '-updated_at', '-_password_hash',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     _password_hash = db.Column(db.String)
     role = db.Column(db.String)
-    created_at = db.Column(db.DateTime, server_default= db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate= db.func.now())
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     patient = db.relationship('Patient', backref='users', uselist=False)
     issuer = db.relationship('Issuer', backref='users',  uselist=False)
@@ -115,7 +119,7 @@ class User(db.Model, SerializerMixin):
     @hybrid_property
     def password_hash(self):
         raise Exception("Password hashes may not be viewed")
-    
+
     @password_hash.setter
     def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))

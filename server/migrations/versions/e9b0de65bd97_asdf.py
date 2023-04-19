@@ -1,8 +1,8 @@
 """asdf
 
-Revision ID: 77a9c2bc993d
+Revision ID: e9b0de65bd97
 Revises: 
-Create Date: 2023-04-19 09:58:55.508235
+Create Date: 2023-04-19 16:18:23.945940
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '77a9c2bc993d'
+revision = 'e9b0de65bd97'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,13 +27,6 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
-    )
-    op.create_table('vaccines',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('issuers',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -69,14 +62,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('patient_id', sa.Integer(), nullable=True),
     sa.Column('issuer_id', sa.Integer(), nullable=True),
-    sa.Column('vaccine_id', sa.Integer(), nullable=True),
+    sa.Column('name', sa.String(), nullable=True),
     sa.Column('expiration_date', sa.String(), nullable=True),
     sa.Column('visibility', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['issuer_id'], ['issuers.id'], name=op.f('fk_vaccinations_issuer_id_issuers')),
     sa.ForeignKeyConstraint(['patient_id'], ['patients.id'], name=op.f('fk_vaccinations_patient_id_patients')),
-    sa.ForeignKeyConstraint(['vaccine_id'], ['vaccines.id'], name=op.f('fk_vaccinations_vaccine_id_vaccines')),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
@@ -88,6 +80,5 @@ def downgrade():
     op.drop_table('validators')
     op.drop_table('patients')
     op.drop_table('issuers')
-    op.drop_table('vaccines')
     op.drop_table('users')
     # ### end Alembic commands ###

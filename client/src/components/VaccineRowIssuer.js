@@ -1,12 +1,13 @@
 import React from "react";
 import "../App.css";
 
-function VaccineRowIssuer() {
+function VaccineRowIssuer({ vaccineData }) {
+  console.log(vaccineData);
   return (
     <tr>
-      <td>Vaccine A</td>
-      <td>NYU</td>
-      <td>5/13/2023</td>
+      <td>{vaccineData.name}</td>
+      <td>{vaccineData.issuers.name}</td>
+      <td>{vaccineData.expiration_date}</td>
     </tr>
   );
 }
