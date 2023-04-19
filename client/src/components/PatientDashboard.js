@@ -3,7 +3,8 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import VaccineRowIssuer from "./VaccineRowIssuer";
 
-function PatientDashboard() {
+function PatientDashboard({ DL }) {
+  console.log(DL);
   const navigate = useNavigate();
 
   function handleDashboardNavigate() {

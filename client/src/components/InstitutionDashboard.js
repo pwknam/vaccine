@@ -3,7 +3,7 @@ import "../App.css";
 import PatientCard from "./PatientCard";
 import { useNavigate } from "react-router-dom";
 
-function InstitutionDashboard({ userInfo }) {
+function InstitutionDashboard({ userInfo, DL }) {
   // console.log(userInfo.patients[0].patients.dl_number);
   const navigate = useNavigate();
 
@@ -15,8 +15,9 @@ function InstitutionDashboard({ userInfo }) {
     return (
       <div className="cardItem">
         <PatientCard
-          key={patient.patients.dl_number}
-          patientData={patient.patients}
+          key={patient.dl_number}
+          patientData={patient}
+          patientDL={DL}
         />
       </div>
     );
