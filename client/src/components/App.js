@@ -17,6 +17,7 @@ function App() {
   const [patientDL, setPatientDL] = useState({});
   const [patient, setPatient] = useState({});
   const [patients, setPatients] = useState([]);
+  const [validatorDL, setValidatorDL] = useState("")
 
   function setNewUser(user) {
     setUser(user);
@@ -25,6 +26,10 @@ function App() {
 
   function setNewPatient(patient) {
     setPatients([...patients, patient]);
+  }
+
+  function setSearch(val) {
+    setValidatorDL(val)
   }
   return (
     <div className="mainPage">
@@ -64,8 +69,8 @@ function App() {
             <PatientDashboard DL={patientDL} user={user} patient={patient} />
           }
         />
-        <Route path="/searchPage" element={<SearchPage />} />
-        <Route path="/validatorDashboard" element={<ValidatorDashboard />} />
+        <Route path="/searchPage" element={<SearchPage setSearch={setSearch} dl={validatorDL}/>} />
+        <Route path="/validatorDashboard" element={<ValidatorDashboard dl={validatorDL} user={user} />} />
       </Routes>
     </div>
   );
