@@ -30,7 +30,7 @@ class Patient(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    dl_number = db.Column(db.Integer)
+    dl_number = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -55,7 +55,7 @@ class Issuer(db.Model, SerializerMixin):
 
     vaccinations = db.relationship('Vaccination', backref='issuers')
     patients = association_proxy('vaccinations', 'patient')
-    # vaccines = association_proxy('vaccinations', 'vaccine')
+#     vaccines = association_proxy('vaccinations', 'vaccine')
 
 # class Vaccine(db.Model, SerializerMixin):
 #     __tablename__ = 'vaccines'
@@ -71,7 +71,7 @@ class Issuer(db.Model, SerializerMixin):
 #     patients = association_proxy('vaccinations', 'patient')
 #     issuers = association_proxy('vaccinations', 'issuer')
 
-    # logic behind conditional rendering for vaccine visibility is to
+#     logic behind conditional rendering for vaccine visibility is to
 
 
 class Validator(db.Model, SerializerMixin):

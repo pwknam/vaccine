@@ -3,6 +3,8 @@ from models import db, Issuer, Patient, Validator, User, Vaccination
 from random import randint
 
 with app.app_context():
+    # db.session.delete(Issuer)
+    # db.session.delete(User)
 
     i1 = Issuer(name='NYU', institution_type='Hospital', verified=True)
     i2 = Issuer(name='Nathan Littauer',
@@ -13,22 +15,22 @@ with app.app_context():
     db.session.add_all(issuers)
     db.session.commit()
 
-    p1 = Patient(name='Ian', dl_number=randint(100000000, 999999999))
-    p2 = Patient(name='Kyushik', dl_number=randint(100000000, 999999999))
-    p3 = Patient(name='Michelle', dl_number=randint(100000000, 999999999))
-    p4 = Patient(name='Sally', dl_number=randint(100000000, 999999999))
-    p5 = Patient(name='Bill', dl_number=randint(100000000, 999999999))
-    p6 = Patient(name='Anson', dl_number=randint(100000000, 999999999))
-    p7 = Patient(name='Bobby', dl_number=randint(100000000, 999999999))
-    p8 = Patient(name='Jack', dl_number=randint(100000000, 999999999))
-    p9 = Patient(name='Chris C.', dl_number=randint(100000000, 999999999))
-    p10 = Patient(name='Chris W.', dl_number=randint(100000000, 999999999))
-    p11 = Patient(name='Brett', dl_number=randint(100000000, 999999999))
-    p12 = Patient(name='Finn', dl_number=randint(100000000, 999999999))
-    p13 = Patient(name='Min', dl_number=randint(100000000, 999999999))
-    p14 = Patient(name='Jacob', dl_number=randint(100000000, 999999999))
-    p15 = Patient(name='Nick', dl_number=randint(100000000, 999999999))
-    p16 = Patient(name='Eshwar', dl_number=randint(100000000, 999999999))
+    p1 = Patient(name='Ian!', dl_number="string1")
+    p2 = Patient(name='Kyushik', dl_number="019850875")
+    p3 = Patient(name='Michelle', dl_number="F2908854")
+    p4 = Patient(name='Sally', dl_number="string3")
+    p5 = Patient(name='Bill', dl_number="string4")
+    p6 = Patient(name='Anson', dl_number="string5")
+    p7 = Patient(name='Bobby', dl_number="string6")
+    p8 = Patient(name='Jack', dl_number="string7")
+    p9 = Patient(name='Chris C.', dl_number="string8")
+    p10 = Patient(name='Chris W.', dl_number="string9")
+    p11 = Patient(name='Brett', dl_number="string10")
+    p12 = Patient(name='Finn', dl_number="string11")
+    p13 = Patient(name='Min', dl_number="string12")
+    p14 = Patient(name='Jacob', dl_number="string13")
+    p15 = Patient(name='Nick', dl_number="string14")
+    p16 = Patient(name='Eshwar', dl_number="string15")
     patients = [p1, p2, p3, p4, p5, p6, p7, p8,
                 p9, p10, p11, p12, p13, p14, p15, p16]
     db.session.add_all(patients)

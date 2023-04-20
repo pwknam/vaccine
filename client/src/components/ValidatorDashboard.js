@@ -10,9 +10,10 @@ function ValidatorDashboard({dl , user}) {
   function handleSearchPage() {
     navigate({ pathname: "/searchPage" });
   }
+  console.log(dl)
 
   useEffect(() => {
-    console.log(dl, user.role)
+    console.log(dl, user)
     fetch(`http://127.0.0.1:5555/patients/${dl}/${user.role}`)
     .then(r => r.json())
     .then(data => {

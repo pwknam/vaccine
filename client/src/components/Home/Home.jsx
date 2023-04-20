@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import './homeStyles.css'
 import { WebcamCapture} from '../Webcam/Webcam'
+import { useNavigate } from "react-router-dom";
 
 
-const Home = () => {
+const Home = ({setSearch}) => {
     const [image, setImage] = useState('');
     const[driverslicense, setDriverslicense] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSubmit= (e) => {
         // alert("Form submitted");
@@ -25,11 +27,13 @@ const Home = () => {
           })
           .then(data => {        
             console.log(data);
-            setDriverslicense(data.license)
+            setSearch(data.license)
+            navigate({ pathname: "/validatorDashboard" });
           })
           .catch(error => {
             console.log(error);
           });
+        
 
         
       
@@ -38,21 +42,14 @@ const Home = () => {
 
 
     return (
-        <div className="home-container">
-            <div className="container">
-                <div className="text">
-                    {/* <h1>Upload or capture a picture of your ID</h1> */}
+       
                     <form className="form">
                         <WebcamCapture image={image} handleSubmit={handleSubmit} setImage = {setImage} />
-                        {/* <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                        <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)} /> */}
                         <button type="submit" id="login-button" onClick={(e) => handleSubmit(e)}>Submit</button>
+                        {driverslicense && <h1>{driverslicense}</h1>}    
+
                     </form>
-                    {driverslicense && <h1>{driverslicense}</h1>}    
-                </div>
-                 
-            </div>
-        </div>
+
     )
 }
 export default Home
