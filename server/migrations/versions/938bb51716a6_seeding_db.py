@@ -1,9 +1,8 @@
-"""depoloyment
+"""seeding db
 
-
-Revision ID: 462a3103063b
+Revision ID: 938bb51716a6
 Revises: 
-Create Date: 2023-04-20 09:14:02.450939
+Create Date: 2023-04-20 13:44:43.757099
 
 """
 from alembic import op
@@ -11,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '462a3103063b'
+revision = '938bb51716a6'
 down_revision = None
 branch_labels = None
 depends_on = None
