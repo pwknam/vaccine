@@ -1,8 +1,9 @@
-"""asdf
+"""depoloyment
 
-Revision ID: e9b0de65bd97
+
+Revision ID: 462a3103063b
 Revises: 
-Create Date: 2023-04-19 16:18:23.945940
+Create Date: 2023-04-20 09:14:02.450939
 
 """
 from alembic import op
@@ -10,7 +11,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e9b0de65bd97'
+revision = '462a3103063b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +24,7 @@ def upgrade():
     sa.Column('username', sa.String(), nullable=True),
     sa.Column('_password_hash', sa.String(), nullable=True),
     sa.Column('role', sa.String(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username')
@@ -34,7 +35,7 @@ def upgrade():
     sa.Column('institution_type', sa.String(), nullable=True),
     sa.Column('verified', sa.Boolean(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_issuers_user_id_users')),
     sa.PrimaryKeyConstraint('id')
@@ -44,7 +45,7 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('dl_number', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_patients_user_id_users')),
     sa.PrimaryKeyConstraint('id')
@@ -53,7 +54,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_validators_user_id_users')),
     sa.PrimaryKeyConstraint('id')
@@ -65,7 +66,7 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('expiration_date', sa.String(), nullable=True),
     sa.Column('visibility', sa.Boolean(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['issuer_id'], ['issuers.id'], name=op.f('fk_vaccinations_issuer_id_issuers')),
     sa.ForeignKeyConstraint(['patient_id'], ['patients.id'], name=op.f('fk_vaccinations_patient_id_patients')),

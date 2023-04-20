@@ -172,8 +172,8 @@ class PatientByID(Resource):
                 Vaccination.patient_id == patient.id)]
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
-                # v.issuer_name = v.issuers.name
-            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuers.name'))), 200)
+                v.issuer_name = v.issuers.name
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuer_name'))), 200)
         return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
 
