@@ -83,7 +83,7 @@ function App() {
         <Route path="/activateAccount" element={<ActivateAccount />} />
         <Route
           path="/patientVaccineSummary"
-          element={<PatientVaccineSummary />}
+          element={<PatientVaccineSummary user={user}/>}
         />
         <Route
           path="/searchPage"

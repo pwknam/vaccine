@@ -3,6 +3,7 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import VaccineRowIssuer from "./VaccineRowIssuer";
 
+
 function PatientDashboard({ DL, user, patient }) {
   const [patientData, setPatientData] = useState({});
   const [vaccinations, setVaccinations] = useState([]);
@@ -10,6 +11,7 @@ function PatientDashboard({ DL, user, patient }) {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
+  const [email, setEmail] = useState("");
   console.log(patient);
 
   function handleDashboardNavigate() {
@@ -34,9 +36,12 @@ function PatientDashboard({ DL, user, patient }) {
         );
       })
     : null;
+
+
   function handleNewVaccine(e) {
     console.log(user.issuer_id);
     e.preventDefault();
+
     fetch(`http://127.0.0.1:8000/vaccinations`, {
       method: "POST",
       headers: {
@@ -45,6 +50,7 @@ function PatientDashboard({ DL, user, patient }) {
       body: JSON.stringify({
         name: name,
         expiration_date: date,
+        email: email,
         issuer_id: user.issuer_id,
         patient_id: patient.id,
       }),
@@ -102,8 +108,19 @@ function PatientDashboard({ DL, user, patient }) {
               value={date}
             ></input>
           </div>
+          <div className="formDiv">
+            <label className="formLabel">Email, If User wants to activate account</label>
+            <input
+              type="text"
+              className="formInput"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            ></input>
+          </div>
+
 
           <button className="createAccountButton">Add Vaccine</button>
+          
         </form>
       </div>
     </div>

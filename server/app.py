@@ -6,6 +6,9 @@ from butler import Client
 from PIL import Image
 import io
 import base64
+import smtplib
+import ssl
+from email.message import EmailMessage
 
 app.secret_key = b'kyushikiscool'
 
@@ -132,7 +135,36 @@ api.add_resource(Login, '/login')
 
 class Vaccinations(Resource):
     def post(self):
+        
         data = request.get_json()
+
+        if data['email'] != '':
+            email_sender = 'info.vaccinerecords@gmail.com'
+            email_password = 'hejneulmiryurccz'
+            email_receiver = data['email']
+
+            subject = 'Activate Vaccination Account'
+            body = """
+            Hello,
+            
+            Thank you for getting your {} vaccine today.
+
+            Please click this link to activate your account and update the privacy settings of your vaccine records: TO ADD!
+            """.format(data['name'])
+
+            em = EmailMessage()
+            em['From'] = email_sender
+            em['To'] = email_receiver
+            em['Subject'] = subject
+            em.set_content(body)
+
+            context = ssl.create_default_context()
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+                smtp.login(email_sender, email_password)
+                smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+        
         try:
             vaccination = Vaccination(
                 name=data['name'], expiration_date=data['expiration_date'], patient_id=data['patient_id'], issuer_id=data['issuer_id'], visibility=False)
