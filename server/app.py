@@ -2,8 +2,8 @@ from flask import request, make_response, jsonify, session
 from flask_restful import Resource
 from models import Issuer, Patient, Vaccination, User, Validator
 from config import app, db, api
-# from butler import Client
-# from PIL import Image
+from butler import Client
+from PIL import Image
 import io
 import base64
 
@@ -86,7 +86,7 @@ class Login(Resource):
             # print(user.role, 'line somethin')
             session['user_id'] = user.id
             session['user_role'] = user.role
-            print(session.get('user_role'), 'wpposadf')
+            # print(session.get('user_role'), 'wpposadf')
             if user.role == 'Issuer':
                 issuer = user.issuer
                 patients = []
@@ -149,8 +149,8 @@ api.add_resource(Vaccinations, '/vaccinations')
 class PatientByID(Resource):
     def get(self, id, user_role):
         patient = Patient.query.filter(Patient.dl_number == id).first()
-        print(f"user role: {session.get('user_role')}")
-        print(f"user id {session.get('user_id')}")
+        # print(f"user role: {session.get('user_role')}")
+        # print(f"user id {session.get('user_id')}")
         if not patient:
             return make_response(jsonify({'error': 'Patient not found.'}), 404)
         if user_role == 'Validator':
@@ -166,24 +166,49 @@ class PatientByID(Resource):
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
-            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'vaccinations.visibility'))), 200)
+                v.vaccination_id = v.id
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'vaccinations.visibility', 'vaccinations.id'))), 200)
         elif user_role == 'Issuer':
             patient.vaccinations = [v for v in Vaccination.query.filter(
                 Vaccination.patient_id == patient.id)]
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
-            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuer_name'))), 200)
+                v.vaccination_id = v.id
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuer_name', 'vaccinations.id'))), 200)
         return make_response(jsonify({'error': 'Unauthorized access'}), 401)
-
-
+                
 api.add_resource(PatientByID, '/patients/<int:id>/<string:user_role>')
 
+class VaccinationByID(Resource):
+    def patch(self, id):
+        vaccination = Vaccination.query.filter(Vaccination.id == id).first()
+        if not vaccination:
+            return make_response(jsonify({'error': "Vaccination not found"}), 404)
+        data = request.get_json()
+        try:
+            for attr in data:
+                setattr(vaccination, attr, data[attr])
+            db.session.add(vaccination)
+            db.session.commit()
+        except ValueError as e:
+            return make_response(jsonify({'errors': [str(e)]}))
+        vaccination.issuer_name = vaccination.issuers.name
+        return make_response(jsonify(vaccination.to_dict(only=('expiration_date', 'id','issuer_id','name','issuer_name', 'visibility'))), 200)
+    
+    def get(self, id):
+        vaccination = Vaccination.query.filter(Vaccination.id == id).first()
+        if not vaccination:
+            return make_response(jsonify({'error': 'Vaccination not found'}), 404)
+        vaccination.issuer_name = vaccination.issuers.name
+        return make_response(jsonify(vaccination.to_dict(only=('expiration_date', 'id','issuer_id','name','issuer_name', 'visibility'))), 200)
+    
+api.add_resource(VaccinationByID, '/vaccinations/<int:id>')
 
 class Patients(Resource):
     def get(self):
         # make get patients only available to specific role
-        patients = [p.to_dict() for p in Patients.query.all()]
+        patients = [p.to_dict() for p in Patient.query.all()]
         return make_response(jsonify(patients), 200)
 
     def post(self):
@@ -199,38 +224,38 @@ class Patients(Resource):
 
 api.add_resource(Patients, '/patients')
 
-# class Upload(Resource):
-#     def post(self):
-#         image_data = request.get_json()
-#         # Write image data to file
-#         image_data = image_data['image'].split(",")[-1]
-#         decoded_data = base64.b64decode(image_data)
-#         image = Image.open(io.BytesIO(decoded_data))
-#         # image.show()
-#         # print(image_data)
-#         with open('./storage/ocr_image.jpeg', 'wb') as f:
-#             f.write(decoded_data)
+class Upload(Resource):
+    def post(self):
+        image_data = request.get_json()
+        # Write image data to file
+        image_data = image_data['image'].split(",")[-1]
+        decoded_data = base64.b64decode(image_data)
+        image = Image.open(io.BytesIO(decoded_data))
+        # image.show()
+        # print(image_data)
+        with open('./storage/ocr_image.jpeg', 'wb') as f:
+            f.write(decoded_data)
 
 
-#         # Make sure to first install the SDK using 'pip install butler-sdk'
+        # Make sure to first install the SDK using 'pip install butler-sdk'
 
 
-#         # Specify variables for use in script below
-#         api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjkxNDc5MTMzMjAzMDMzOTY2OSIsImVtYWlsIjoibWNob2k0MTk0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE2ODE2NjkwNzU5OTZ9.zYaCZMVgMnUWurL7CGa0JGrR29CIolKRlSvgqDZjTTU'
-#         queue_id = '93c11f04-c119-4f78-a7b5-036b617fda49'
+        # Specify variables for use in script below
+        api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjkxNDc5MTMzMjAzMDMzOTY2OSIsImVtYWlsIjoibWNob2k0MTk0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE2ODE2NjkwNzU5OTZ9.zYaCZMVgMnUWurL7CGa0JGrR29CIolKRlSvgqDZjTTU'
+        queue_id = '93c11f04-c119-4f78-a7b5-036b617fda49'
 
-#         # Specify the path to the file you would like to process
-#         file_location = './storage/ocr_image.jpeg'
+        # Specify the path to the file you would like to process
+        file_location = './storage/ocr_image.jpeg'
 
-#         fileinfo = Client(api_key).extract_document(queue_id, file_location)
-#         formFields = fileinfo.to_dict()['formFields']
-#         for field in formFields:
-#             if field['fieldName'] == "Document Number":
-#                 license = field['value']
-#         response = {"error": "No License found"} if not license else {"license": license}
-#         return make_response(response, 200)
+        fileinfo = Client(api_key).extract_document(queue_id, file_location)
+        formFields = fileinfo.to_dict()['formFields']
+        for field in formFields:
+            if field['fieldName'] == "Document Number":
+                license = field['value']
+        response = {"error": "No License found"} if not license else {"license": license}
+        return make_response(response, 200)
 
-# api.add_resource(Upload, '/upload')
+api.add_resource(Upload, '/upload')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
