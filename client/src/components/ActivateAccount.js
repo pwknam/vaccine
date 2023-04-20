@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-function ActivateAccount() {
+function ActivateAccount({setUser}) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [DL, setDL] = useState("");
@@ -10,8 +10,24 @@ function ActivateAccount() {
 
   function onFormSubmit(e) {
     e.preventDefault();
-    navigate({ pathname: "/patientVaccineSummary" });
+    fetch(`/signup_patient/${DL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "username": username,
+        "password": password
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      setUser(data)
+      navigate({ pathname: "/patientVaccineSummary" });
+    })
   }
+
+  
 
   return (
     <div className="setupInstitution">

@@ -6,7 +6,7 @@ function PatientVaccineSummaryCard({vaccination}) {
   console.log(vaccination)
 
   const handleToggle = () => {
-    fetch(`http://127.0.0.1:8000/vaccinations/${vaccination.id}`, {
+    fetch(`/vaccinations/${vaccination.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": 'application/json'

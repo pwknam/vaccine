@@ -14,6 +14,7 @@ import ValidatorDashboard from "./ValidatorDashboard";
 import PatientLandingPage from "./PatientLandingPage";
 import ActivateAccount from "./ActivateAccount";
 import PatientVaccineSummary from "./PatientVaccineSummary";
+import { useEffect } from "react";
 
 function App() {
   const [user, setUser] = useState({});
@@ -23,6 +24,17 @@ function App() {
   const [validatorDL, setValidatorDL] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/check_session')
+    .then(r => {
+      if (r.ok) {
+        r.json().then(data => data.patients ? setNewUser(data) : setUser(data))
+      } else {
+        navigate('/')
+      }
+    })
+  }, [])
 
   function setNewUser(user) {
     setUser(user);
@@ -80,7 +92,7 @@ function App() {
           }
         />
         <Route path="/patientLandingPage" element={<PatientLandingPage />} />
-        <Route path="/activateAccount" element={<ActivateAccount />} />
+        <Route path="/activateAccount" element={<ActivateAccount setUser={setUser}/>} />
         <Route
           path="/patientVaccineSummary"
           element={<PatientVaccineSummary user={user}/>}

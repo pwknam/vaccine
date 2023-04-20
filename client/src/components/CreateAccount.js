@@ -17,7 +17,7 @@ function CreateAccount({ setNewUser }) {
   function handleCreateAccountSubmit(e) {
     e.preventDefault();
     fetch(
-      `http://127.0.0.1:8000/signup_${
+      `/signup_${
         option === "Issuer" ? "issuer" : "validator"
       }`,
       {

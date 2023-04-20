@@ -7,7 +7,7 @@ function PatientVaccineSummary({user}) {
   const [vaccinations, setVaccinations] = useState([])
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/patients/${user.dl_number}/${user.role}`)
+    fetch(`/patients/${user.dl_number}/${user.role}`)
     .then(r => r.json())
     .then(data => {
       console.log(data.vaccinations)
@@ -22,7 +22,7 @@ function PatientVaccineSummary({user}) {
   return (
     <div>
       <div className="vaccineSummaryTitleDiv">
-        <h1>Patient Name</h1>
+        <h1>{user.name}</h1>
         <h3>Vaccine Summary</h3>
         <div>
           {/* <PatientVaccineSummaryCard /> */}

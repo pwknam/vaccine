@@ -12,7 +12,7 @@ const Home = ({setSearch}) => {
     const handleSubmit= (e) => {
         // alert("Form submitted");
         e.preventDefault()
-        fetch('http://127.0.0.1:5555/upload', {
+        fetch('/upload', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -33,10 +33,6 @@ const Home = ({setSearch}) => {
           .catch(error => {
             console.log(error);
           });
-        
-
-        
-      
     }
 
 

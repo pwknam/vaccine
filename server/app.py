@@ -12,7 +12,41 @@ from email.message import EmailMessage
 
 app.secret_key = b'kyushikiscool'
 
+class CheckSession(Resource):
+    def get(self):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            if session.get('user_role') == 'Issuer':
+                issuer = user.issuer
+                patients = []
+                dl_numbers = set()
+                for v in issuer.vaccinations:
+                    if v.patients.dl_number not in dl_numbers:
+                        patients.append({
+                            'name': v.patients.name,
+                            'dl_number': v.patients.dl_number,
+                            'id': v.patients.id
+                        })
+                        dl_numbers.add(v.patients.dl_number)
+                user.patients = patients
+                user.issuer_id = issuer.id
 
+                return make_response(jsonify(user.to_dict(rules=('patients', 'issuer_id'))), 200)
+            elif session.get('user_role') == 'Patient':
+                return make_response(jsonify({'name': user.patient.name, 'dl_number': user.patient.dl_number, "role": "Patient"}), 200)
+            elif session.get('user_role') == 'Validator':
+                user.validator.role = user.validator.users.role
+                return make_response(jsonify(user.validator.to_dict(only=('name', 'id', 'role'))), 200)
+            return make_response(jsonify({'error': 'Invalid username or password.'}), 401)
+        else:
+            return {'error': 'Unauthorized'}, 401
+api.add_resource(CheckSession, '/check_session')
+
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        session['user_role'] = None
+        return {}, 204
 class SignupPatient(Resource):
     def post(self, id):
         data = request.get_json()
@@ -29,7 +63,7 @@ class SignupPatient(Resource):
             session['user_role'] = new_user.role
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}), 422)
-        return make_response(jsonify(new_user.to_dict()), 201)
+        return make_response(jsonify({'name': new_user.patient.name, 'dl_number': new_user.patient.dl_number, "role": "Patient"}), 200)
 
 
 api.add_resource(SignupPatient, '/signup_patient/<int:id>')
@@ -107,7 +141,7 @@ class Login(Resource):
 
                 return make_response(jsonify(user.to_dict(rules=('patients', 'issuer_id'))), 200)
             elif user.role == 'Patient':
-                return make_response(jsonify({'name': user.patient.name, 'dl_number': user.patient.dl_number, "role": session["user_role"]}), 200)
+                return make_response(jsonify({'name': user.patient.name, 'dl_number': user.patient.dl_number, "role": "Patient"}), 200)
             elif user.role == 'Validator':
                 user.validator.role = user.validator.users.role
                 return make_response(jsonify(user.validator.to_dict(only=('name', 'id', 'role'))), 200)
@@ -172,7 +206,7 @@ class Vaccinations(Resource):
             db.session.commit()
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}), 422)
-        return make_response(jsonify(vaccination.to_dict()))
+        return make_response(jsonify(vaccination.to_dict(only=())), 201)
 
 
 api.add_resource(Vaccinations, '/vaccinations')
@@ -185,14 +219,14 @@ class PatientByID(Resource):
         # print(f"user id {session.get('user_id')}")
         if not patient:
             return make_response(jsonify({'error': 'Patient not found.'}), 404)
-        if user_role == 'Validator':
+        if session.get('user_role') == 'Validator':
             patient.vaccinations = [v for v in Vaccination.query.filter(
                 Vaccination.patient_id == patient.id) if v.visibility == True]
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
             return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name'))), 200)
-        elif user_role == 'Patient':
+        elif session.get('user_role') == 'Patient':
             patient.vaccinations = [v for v in Vaccination.query.filter(
                 Vaccination.patient_id == patient.id)]
             for v in patient.vaccinations:
@@ -200,7 +234,7 @@ class PatientByID(Resource):
                 v.issuer_name = v.issuers.name
                 v.vaccination_id = v.id
             return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'vaccinations.visibility', 'vaccinations.id'))), 200)
-        elif user_role == 'Issuer':
+        elif session.get('user_role') == 'Issuer':
             patient.vaccinations = [v for v in Vaccination.query.filter(
                 Vaccination.patient_id == patient.id)]
             for v in patient.vaccinations:
@@ -245,6 +279,8 @@ class Patients(Resource):
 
     def post(self):
         data = request.get_json()
+        if session.get('user_role') != "Issuer" or not session.get('user_role'):
+            return make_response(jsonify({'error': 'Unauthorized access'}))
         try:
             patient = Patient(name=data['name'], dl_number=data['dl_number'])
             db.session.add(patient)
