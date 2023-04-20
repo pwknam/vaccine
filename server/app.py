@@ -47,6 +47,7 @@ class Logout(Resource):
         session['user_id'] = None
         session['user_role'] = None
         return {}, 204
+api.add_resource(Logout, '/logout')
 class SignupPatient(Resource):
     def post(self, id):
         data = request.get_json()
