@@ -1,35 +1,48 @@
 import React, { useState } from "react";
 import "../App.css";
 
-function PatientVaccineSummaryCard() {
-  const [isToggled, setIsToggled] = useState(false);
+function PatientVaccineSummaryCard({vaccination}) {
+  const [vaccinationVisibility, setVaccinationVisibility] = useState(vaccination.visibility)
+  console.log(vaccination)
 
   const handleToggle = () => {
-    setIsToggled(!isToggled);
+    fetch(`/vaccinations/${vaccination.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({
+        "visibility": !vaccinationVisibility
+      })
+    })
+    .then(r => r.json())
+    .then(data => setVaccinationVisibility(data.visibility))
+    
   };
 
   return (
     <div className="cardContainer">
       <div className="cardTitle">
-        <h3>Vaccine Name</h3>
+        {/* <h3>Vaccine Name</h3> */}
+        <h3>{vaccination.name}</h3>
       </div>
 
       <div className="cardDetails">
         <div className="cardDetail">
           <p className="cardDetailTitle">Issuer</p>
-          <p>Hospital Name</p>
+          <p>{vaccination.issuer_name}</p>
         </div>
         <div className="cardDetail">
           <p className="cardDetailTitle">Valid Through</p>
-          <p>Date</p>
+          <p>{vaccination.expiration_date}</p>
         </div>
         <div className="cardDetail">
           <p className="cardDetailTitle">Privacy</p>
           <button
-            className={`toggle-button ${isToggled ? "toggled" : ""}`}
+            className={`toggle-button ${vaccinationVisibility ? "" : "toggled"}`}
             onClick={handleToggle}
           >
-            {isToggled ? "On" : "Off"}
+            {vaccinationVisibility ? "Off" : "On"}
           </button>
         </div>
       </div>

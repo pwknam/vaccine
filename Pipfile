@@ -14,6 +14,10 @@ flask-restful = "*"
 flask-cors = "*"
 gunicorn = "*"
 psycopg2 = "*"
+flask-bcrypt = "*"
+flask-sqlalchemy = "*"
+sqlalchemy = "*"
+butler-sdk = "*"
 
 [dev-packages]
 

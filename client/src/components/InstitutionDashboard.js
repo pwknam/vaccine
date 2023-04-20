@@ -33,7 +33,6 @@ function InstitutionDashboard({ userInfo, DL, setPatient, patients }) {
         );
       })
     : null;
-
   return (
     <div className="institutionDashboardPage">
       <div className="topBar">

@@ -1,8 +1,8 @@
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-// import Home from "./Home/Home";
 import Search from "../images/search.svg";
+import Home from "./Home/Home";
 
 function SearchPage({ setSearch, dl }) {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ function SearchPage({ setSearch, dl }) {
         {/* IF YOU WANT TO GET RID OF THE UGLY OCR THEN COMMENT OUT THE HOME COMPONENT - I NEED TO RENAME ANYWAYS */}
         {/* <Home/> */}
         <button className="button-47">Search</button>
+        <Home setSearch={setSearch} />
       </form>
     </div>
   );

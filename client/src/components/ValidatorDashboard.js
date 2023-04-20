@@ -13,7 +13,7 @@ function ValidatorDashboard({ dl, user }) {
 
   useEffect(() => {
     console.log(dl, user.role);
-    fetch(`http://127.0.0.1:8000/patients/${dl}/${user.role}`)
+    fetch(`/patients/${dl}`)
       .then((r) => r.json())
       .then((data) => {
         console.log(data);

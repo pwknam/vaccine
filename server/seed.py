@@ -4,6 +4,12 @@ from random import randint
 
 with app.app_context():
 
+    Issuer.query.delete()
+    Patient.query.delete()
+    Validator.query.delete()
+    User.query.delete()
+    Vaccination.query.delete()
+
     i1 = Issuer(name='NYU', institution_type='Hospital', verified=True)
     i2 = Issuer(name='Nathan Littauer',
                 institution_type='Hospital', verified=True)

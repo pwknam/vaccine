@@ -10,7 +10,7 @@ function NewPatientForm({ setNewPatient }) {
 
   function handleInstitutionDashboardPage(e) {
     e.preventDefault();
-    fetch(`http://127.0.0.1:8000/patients`, {
+    fetch(`/patients`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

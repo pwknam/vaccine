@@ -11,14 +11,15 @@ function PatientDashboard({ DL, user, patient }) {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  console.log(patient);
+  const [email, setEmail] = useState("");
+  console.log(DL);
 
   function handleDashboardNavigate() {
     navigate({ pathname: "/institutionDashboard" });
   }
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/patients/${DL}/${user.role}`)
+    fetch(`/patients/${DL}`)
       .then((r) => r.json())
       .then((data) => {
         setPatientData(data);
@@ -35,10 +36,12 @@ function PatientDashboard({ DL, user, patient }) {
         );
       })
     : null;
+
   function handleNewVaccine(e) {
     console.log(user.issuer_id);
     e.preventDefault();
-    fetch(`http://127.0.0.1:8000/vaccinations`, {
+
+    fetch(`/vaccinations`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,6 +49,7 @@ function PatientDashboard({ DL, user, patient }) {
       body: JSON.stringify({
         name: name,
         expiration_date: date,
+        email: email,
         issuer_id: user.issuer_id,
         patient_id: patient.id,
       }),
@@ -120,6 +124,17 @@ function PatientDashboard({ DL, user, patient }) {
               <button className="button-47">Add Vaccine</button>
             </form>
           </div>
+        </div>
+        <div className="formDiv">
+          <label className="formLabel">
+            Email, If User wants to activate account
+          </label>
+          <input
+            type="text"
+            className="formInput"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          ></input>
         </div>
       </div>
     </div>
