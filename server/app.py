@@ -12,6 +12,7 @@ from email.message import EmailMessage
 
 app.secret_key = b'kyushikiscool'
 
+
 class CheckSession(Resource):
     def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
@@ -41,14 +42,21 @@ class CheckSession(Resource):
             return make_response(jsonify({'error': 'Invalid username or password.'}), 401)
         else:
             return {'error': 'Unauthorized'}, 401
+
+
 api.add_resource(CheckSession, '/check_session')
+
 
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None
         session['user_role'] = None
         return {}, 204
+
+
 api.add_resource(Logout, '/logout')
+
+
 class SignupPatient(Resource):
     def post(self, id):
         data = request.get_json()
@@ -171,7 +179,7 @@ api.add_resource(Login, '/login')
 
 class Vaccinations(Resource):
     def post(self):
-        
+
         data = request.get_json()
 
         if data['email'] != '':
@@ -200,7 +208,6 @@ class Vaccinations(Resource):
                 smtp.login(email_sender, email_password)
                 smtp.sendmail(email_sender, email_receiver, em.as_string())
 
-        
         try:
             vaccination = Vaccination(
                 name=data['name'], expiration_date=data['expiration_date'], patient_id=data['patient_id'], issuer_id=data['issuer_id'], visibility=False)
@@ -208,7 +215,8 @@ class Vaccinations(Resource):
             db.session.commit()
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}), 422)
-        return make_response(jsonify(vaccination.to_dict(only=())), 201)
+        vaccination.issuer_name = vaccination.issuers.name
+        return make_response(jsonify(vaccination.to_dict(only=('name', 'issuer_name', 'expiration_date'))), 201)
 
 
 api.add_resource(Vaccinations, '/vaccinations')
@@ -246,8 +254,10 @@ class PatientByID(Resource):
                 v.vaccination_id = v.id
             return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuer_name', 'vaccinations.id'))), 200)
         return make_response(jsonify({'error': 'Unauthorized access'}), 401)
-                
+
+
 api.add_resource(PatientByID, '/patients/<int:id>')
+
 
 class VaccinationByID(Resource):
     def patch(self, id):
@@ -263,16 +273,18 @@ class VaccinationByID(Resource):
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}))
         vaccination.issuer_name = vaccination.issuers.name
-        return make_response(jsonify(vaccination.to_dict(only=('expiration_date', 'id','issuer_id','name','issuer_name', 'visibility'))), 200)
-    
+        return make_response(jsonify(vaccination.to_dict(only=('expiration_date', 'id', 'issuer_id', 'name', 'issuer_name', 'visibility'))), 200)
+
     def get(self, id):
         vaccination = Vaccination.query.filter(Vaccination.id == id).first()
         if not vaccination:
             return make_response(jsonify({'error': 'Vaccination not found'}), 404)
         vaccination.issuer_name = vaccination.issuers.name
-        return make_response(jsonify(vaccination.to_dict(only=('expiration_date', 'id','issuer_id','name','issuer_name', 'visibility'))), 200)
-    
+        return make_response(jsonify(vaccination.to_dict(only=('expiration_date', 'id', 'issuer_id', 'name', 'issuer_name', 'visibility'))), 200)
+
+
 api.add_resource(VaccinationByID, '/vaccinations/<int:id>')
+
 
 class Patients(Resource):
     def get(self):
@@ -295,6 +307,7 @@ class Patients(Resource):
 
 api.add_resource(Patients, '/patients')
 
+
 class Upload(Resource):
     def post(self):
         image_data = request.get_json()
@@ -307,9 +320,7 @@ class Upload(Resource):
         with open('./storage/ocr_image.jpeg', 'wb') as f:
             f.write(decoded_data)
 
-
         # Make sure to first install the SDK using 'pip install butler-sdk'
-
 
         # Specify variables for use in script below
         api_key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjkxNDc5MTMzMjAzMDMzOTY2OSIsImVtYWlsIjoibWNob2k0MTk0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpYXQiOjE2ODE2NjkwNzU5OTZ9.zYaCZMVgMnUWurL7CGa0JGrR29CIolKRlSvgqDZjTTU'
@@ -323,8 +334,10 @@ class Upload(Resource):
         for field in formFields:
             if field['fieldName'] == "Document Number":
                 license = field['value']
-        response = {"error": "No License found"} if not license else {"license": license}
+        response = {"error": "No License found"} if not license else {
+            "license": license}
         return make_response(response, 200)
+
 
 api.add_resource(Upload, '/upload')
 
