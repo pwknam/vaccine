@@ -2,7 +2,7 @@ import React from "react";
 import "../App.css";
 
 function VaccineRowIssuer({ vaccineData }) {
-  console.log(vaccineData.name);
+  console.log(vaccineData);
   return (
     <tr>
       <td>{vaccineData.name}</td>

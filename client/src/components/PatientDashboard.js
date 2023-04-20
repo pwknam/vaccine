@@ -17,7 +17,7 @@ function PatientDashboard({ DL, user, patient }) {
   }
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5555/patients/${DL}/${user.role}`)
+    fetch(`http://127.0.0.1:8000/patients/${DL}/${user.role}`)
       .then((r) => r.json())
       .then((data) => {
         setPatientData(data);
@@ -37,7 +37,7 @@ function PatientDashboard({ DL, user, patient }) {
   function handleNewVaccine(e) {
     console.log(user.issuer_id);
     e.preventDefault();
-    fetch(`http://127.0.0.1:5555/vaccinations`, {
+    fetch(`http://127.0.0.1:8000/vaccinations`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
