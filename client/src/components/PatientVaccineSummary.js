@@ -3,21 +3,23 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import PatientVaccineSummaryCard from "./PatientVaccineSummaryCard";
 
-function PatientVaccineSummary({user}) {
-  const [vaccinations, setVaccinations] = useState([])
+function PatientVaccineSummary({ user }) {
+  const [vaccinations, setVaccinations] = useState([]);
 
   useEffect(() => {
-    fetch(`/patients/${user.dl_number}/${user.role}`)
-    .then(r => r.json())
-    .then(data => {
-      console.log(data.vaccinations)
-      setVaccinations(data.vaccinations)
-    })
-  },[user])
+    fetch(`/patients/${user.dl_number}`)
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data.vaccinations);
+        setVaccinations(data.vaccinations);
+      });
+  }, [user]);
 
-  const displayVaccinations = vaccinations ? vaccinations.map((vaccination) => {
-    return <PatientVaccineSummaryCard vaccination={vaccination}/>
-  }) : null;
+  const displayVaccinations = vaccinations
+    ? vaccinations.map((vaccination) => {
+        return <PatientVaccineSummaryCard vaccination={vaccination} />;
+      })
+    : null;
 
   return (
     <div>
