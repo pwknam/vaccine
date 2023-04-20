@@ -12,6 +12,8 @@ flask-migrate = "*"
 sqlalchemy-serializer = "*"
 flask-restful = "*"
 flask-cors = "*"
+gunicorn = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
