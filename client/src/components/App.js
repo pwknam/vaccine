@@ -29,7 +29,12 @@ function App() {
     fetch('/check_session')
     .then(r => {
       if (r.ok) {
-        r.json().then(data => data.patients ? setNewUser(data) : setUser(data))
+        r.json().then(data => {
+          data.patients ? setNewUser(data) : setUser(data)
+          console.log(data)
+          setPatientDL(data.dl_number)
+          setValidatorDL(data.dl_number)
+        })
       } else {
         navigate('/')
       }

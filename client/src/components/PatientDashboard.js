@@ -12,14 +12,14 @@ function PatientDashboard({ DL, user, patient }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [email, setEmail] = useState("");
-  console.log(patient);
+  console.log(DL);
 
   function handleDashboardNavigate() {
     navigate({ pathname: "/institutionDashboard" });
   }
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/patients/${DL}/${user.role}`)
+    fetch(`/patients/${DL}`)
       .then((r) => r.json())
       .then((data) => {
         setPatientData(data);

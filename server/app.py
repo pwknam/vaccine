@@ -30,13 +30,14 @@ class CheckSession(Resource):
                         dl_numbers.add(v.patients.dl_number)
                 user.patients = patients
                 user.issuer_id = issuer.id
-
-                return make_response(jsonify(user.to_dict(rules=('patients', 'issuer_id'))), 200)
+                user.dl_number = session.get('dl_number')
+                return make_response(jsonify(user.to_dict(rules=('patients', 'issuer_id', 'dl_number'))), 200)
             elif session.get('user_role') == 'Patient':
                 return make_response(jsonify({'name': user.patient.name, 'dl_number': user.patient.dl_number, "role": "Patient"}), 200)
             elif session.get('user_role') == 'Validator':
                 user.validator.role = user.validator.users.role
-                return make_response(jsonify(user.validator.to_dict(only=('name', 'id', 'role'))), 200)
+                user.validator.dl_number = session.get('dl_number')
+                return make_response(jsonify(user.validator.to_dict(only=('name', 'id', 'role', 'dl_number'))), 200)
             return make_response(jsonify({'error': 'Invalid username or password.'}), 401)
         else:
             return {'error': 'Unauthorized'}, 401
@@ -214,8 +215,9 @@ api.add_resource(Vaccinations, '/vaccinations')
 
 
 class PatientByID(Resource):
-    def get(self, id, user_role):
+    def get(self, id):
         patient = Patient.query.filter(Patient.dl_number == id).first()
+        session['dl_number'] = id
         # print(f"user role: {session.get('user_role')}")
         # print(f"user id {session.get('user_id')}")
         if not patient:
@@ -245,7 +247,7 @@ class PatientByID(Resource):
             return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'id', 'vaccinations.issuer_name', 'vaccinations.id'))), 200)
         return make_response(jsonify({'error': 'Unauthorized access'}), 401)
                 
-api.add_resource(PatientByID, '/patients/<int:id>/<string:user_role>')
+api.add_resource(PatientByID, '/patients/<int:id>')
 
 class VaccinationByID(Resource):
     def patch(self, id):
