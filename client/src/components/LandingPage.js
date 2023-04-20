@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import vaccineImage from "../images/CV.svg";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -12,17 +13,28 @@ function LandingPage() {
   function handleClickPatient() {
     navigate({ pathname: "/patientLandingPage" });
   }
-
   return (
     <div className="landingPage">
-      <h1>Vaccine Verification</h1>
-      <h2 id="selection">Please Select</h2>
+      <h1 className="landingPageTitle">
+        Welcome to Haiti's Vaccination Portal
+      </h1>
+      <h2 style={{ color: "#2F2E41" }}>
+        Our current vaccination rate is at 50%. Please help us work towards a
+        healthier future
+      </h2>
+      <div className="landingPageImage">
+        <img
+          src={vaccineImage}
+          alt="Coronavirus Vaccine"
+          style={{ width: 600, height: 600 }}
+        />
+      </div>
       <div className="landingPageButtonsDiv">
-        <button className="mainButton" onClick={handleClickPatient}>
+        <button className="button-46" onClick={handleClickPatient}>
           Patient
         </button>
-        <p>or</p>
-        <button className="mainButton" onClick={handleClickInstitution}>
+        <h3 className="or">or</h3>
+        <button className="button-46" onClick={handleClickInstitution}>
           Institution
         </button>
       </div>

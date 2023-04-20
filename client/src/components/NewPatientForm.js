@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import New from "../images/new.svg";
 
 function NewPatientForm({ setNewPatient }) {
   const navigate = useNavigate();
@@ -25,35 +26,48 @@ function NewPatientForm({ setNewPatient }) {
   }
 
   return (
-    <div className="setupInstitution">
-      <h1>New Patient Form</h1>
-      <form className="createAccountForm">
-        <div className="formDiv">
-          <label className="formLabel">Name of Patient</label>
-          <input
-            type="text"
-            value={name}
-            className="formInput"
-            onChange={(e) => setName(e.target.value)}
-          ></input>
+    <div className="container">
+      <div className="left">
+        <div className="landingPageImage">
+          <img
+            src={New}
+            alt="Coronavirus Vaccine"
+            style={{ width: 700, height: 700 }}
+          />
         </div>
-        <div className="formDiv">
-          <label className="formLabel">DL #</label>
-          <input
-            type="text"
-            className="formInput"
-            onChange={(e) => setDL_Number(e.target.value)}
-            value={dl_number}
-          ></input>
-        </div>
+      </div>
+      <div className="right">
+        <div className="setupInstitution">
+          <h1>New Patient Form</h1>
+          <form className="createAccountForm2">
+            <div className="formDiv1">
+              <label className="formLabel1">Name of Patient</label>
+              <input
+                type="text"
+                value={name}
+                className="formInput1"
+                onChange={(e) => setName(e.target.value)}
+              ></input>
+            </div>
+            <div className="formDiv1">
+              <label className="formLabel1">DL #</label>
+              <input
+                type="text"
+                className="formInput1"
+                onChange={(e) => setDL_Number(e.target.value)}
+                value={dl_number}
+              ></input>
+            </div>
 
-        <button
-          className="createAccountButton"
-          onClick={handleInstitutionDashboardPage}
-        >
-          Add New Patient
-        </button>
-      </form>
+            <button
+              className="button-47"
+              onClick={handleInstitutionDashboardPage}
+            >
+              Add New Patient
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

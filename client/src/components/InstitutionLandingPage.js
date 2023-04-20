@@ -17,16 +17,20 @@ function InstitutionLandingPage() {
   return (
     <div>
       <div className="landingPage">
-        <h1>Vaccine Verification</h1>
-        <h2 id="selection">Please Select</h2>
+        <h1>Institution Portal</h1>
+        {/* <h2 id="selection">Help us make Haiti a healthier place :)</h2> */}
         <div className="landingPageButtonsDiv">
-          <button className="mainButton" onClick={handleCreateAccount}>
-            Create Account
-          </button>
-          <p>or</p>
-          <button className="mainButton" onClick={handleLoginPage}>
-            Login
-          </button>
+          <div className="createContainer">
+            <button className="button-46" onClick={handleCreateAccount}>
+              Create Account
+            </button>
+          </div>
+          {/* <p className="or">or</p> */}
+          <div className="loginContainer">
+            <button className="button-46" onClick={handleLoginPage}>
+              Login
+            </button>
+          </div>
         </div>
       </div>
     </div>

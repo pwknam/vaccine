@@ -38,17 +38,20 @@ function InstitutionDashboard({ userInfo, DL, setPatient, patients }) {
     <div className="institutionDashboardPage">
       <div className="topBar">
         <h1>{userInfo.username}</h1>
-        <button onClick={handleNewPatientForm}>New Patient</button>
+        <button onClick={handleNewPatientForm} className="button-47">
+          New Patient
+        </button>
       </div>
       <div className="searchBarDiv">
         <input
           type="text"
           placeholder="Search Patient"
-          className="searchBar"
+          className="bar"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         ></input>
       </div>
+      <h1>Patients</h1>
       <div className="patientCardGrid">{renderPatientCards}</div>
     </div>
   );

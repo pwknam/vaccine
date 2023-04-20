@@ -1,6 +1,6 @@
 import "../App.css";
 import React, { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 
 import LandingPage from "./LandingPage";
 import InstitutionLandingPage from "./InstitutionLandingPage";
@@ -42,7 +42,22 @@ function App() {
   }
   return (
     <div className="mainPage">
-      <button onClick={goHome}>Go Home</button>
+      <nav>
+        <div class="logo">
+          <Link to="/" id="navTitle">
+            {/* <img src="medical-logo.png" alt="Medical Logo" /> */}
+            <h1>Haiti Vaccination Portal</h1>
+          </Link>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <Link to="/patientLandingPage">Patient</Link>
+          </li>
+          <li>
+            <Link to="/institutionLandingPage">Institution</Link>
+          </li>
+        </ul>
+      </nav>
       <Routes>
         <Route exact path="/" element={<LandingPage />} />
 

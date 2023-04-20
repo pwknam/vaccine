@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import Person from "../images/person.svg";
 
 function PatientCard({ patientData, patientDL, setPatient, setNewPatient }) {
   const navigate = useNavigate();
@@ -12,8 +13,9 @@ function PatientCard({ patientData, patientDL, setPatient, setNewPatient }) {
   }
   return (
     <div className="patientCard" onClick={handlePatientDashboard}>
-      <p>{patientData.name}</p>
-      <p>{patientData.dl_number}</p>
+      <img src={Person} alt="person" style={{ width: 70, height: 70 }}></img>
+      <p className="nameCard">{patientData.name}</p>
+      <p>DL#: {patientData.dl_number}</p>
     </div>
   );
 }
