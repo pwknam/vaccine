@@ -17,21 +17,16 @@ function CreateAccount({ setNewUser }) {
 
   function handleCreateAccountSubmit(e) {
     e.preventDefault();
-    fetch(
-      `/signup_${
-        option === "Issuer" ? "issuer" : "validator"
-      }`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: name,
-          password: password,
-        }),
-      }
-    )
+    fetch(`/signup_${option === "Issuer" ? "issuer" : "validator"}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: name,
+        password: password,
+      }),
+    })
       .then((r) => {
         if (!r.ok) {
           throw new Error("Username already taken")
@@ -54,7 +49,7 @@ function CreateAccount({ setNewUser }) {
   return (
     <div className="container">
       <div className="left">
-        <img src={CA} alt="CA" style={{ width: 700, height: 700 }} />
+        <img src={CA} alt="CA" className="imageClass" />
       </div>
       <div className="right">
         <div className="setupInstitution">
@@ -94,7 +89,7 @@ function CreateAccount({ setNewUser }) {
               ></input>
             </div>
 
-            <button className="button-46">Create Account</button>
+            <button className="button-47">Create Account</button>
           </form>
         </div>
       </div>

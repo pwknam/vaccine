@@ -39,10 +39,14 @@ function ValidatorDashboard({ dl, user }) {
     : null;
 
   return (
-    <div>
+    <div className="institutionDashboardPage">
       <div className="topBar">
         <h1>{patientData.name}</h1>
-        <button onClick={handleSearchPage} className="button-47">
+        <button
+          onClick={handleSearchPage}
+          className="button-47"
+          style={{ marginBottom: "20px" }}
+        >
           Back to Search
         </button>
       </div>

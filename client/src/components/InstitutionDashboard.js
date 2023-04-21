@@ -37,9 +37,6 @@ function InstitutionDashboard({ userInfo, DL, setPatient, patients }) {
     <div className="institutionDashboardPage">
       <div className="topBar">
         <h1>{userInfo.username}</h1>
-        <button onClick={handleNewPatientForm} className="button-47">
-          New Patient
-        </button>
       </div>
       <div className="searchBarDiv">
         <input
@@ -51,6 +48,9 @@ function InstitutionDashboard({ userInfo, DL, setPatient, patients }) {
         ></input>
       </div>
       <h1>Patients</h1>
+      <button onClick={handleNewPatientForm} className="button-47">
+        New Patient
+      </button>
       <div className="patientCardGrid">{renderPatientCards}</div>
     </div>
   );

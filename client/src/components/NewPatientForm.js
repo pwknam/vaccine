@@ -38,15 +38,11 @@ function NewPatientForm({ setNewPatient }) {
     <div className="container">
       <div className="left">
         <div className="landingPageImage">
-          <img
-            src={New}
-            alt="Coronavirus Vaccine"
-            style={{ width: 700, height: 700 }}
-          />
+          <img src={New} alt="Coronavirus Vaccine" className="imageClass" />
         </div>
       </div>
       <div className="right">
-        <div className="setupInstitution">
+        <div className="setupInstitution2">
           <h1>New Patient Form</h1>
           <form className="createAccountForm2">
             <div className="formDiv1">

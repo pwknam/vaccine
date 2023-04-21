@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Webcam from "react-webcam";
 import { Butler } from 'butler-sdk';
+import "./webcamStyles.css"
 // import fs from 'fs';
 
 
@@ -28,6 +29,7 @@ export const WebcamCapture = ({image, setImage}) => {
 
     return (
         <div className="webcam-container">
+            <h1>Upload Picture of License</h1>
             <div className="webcam-img">
 
                 {image == '' ? <Webcam
@@ -39,19 +41,19 @@ export const WebcamCapture = ({image, setImage}) => {
                     videoConstraints={videoConstraints}
                 /> : <img src={image} />}
             </div>
-            <div>
+            <div className='webcam-container'>
                 {image!='' ?
                     <button onClick={(e) => {
                         e.preventDefault();
                         setImage('')
                     }}
-                        className="webcam-btn">
+                        className="button-47">
                         Retake Image</button> :
                     <button onClick={(e) => {
                         e.preventDefault();
                         capture();
                     }}
-                        className="webcam-btn">Capture</button>
+                        className="button-47">Capture</button>
                 }
             </div>
         </div>

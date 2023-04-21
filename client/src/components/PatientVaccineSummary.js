@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import PatientVaccineSummaryCard from "./PatientVaccineSummaryCard";
+import phone from "../images/phone.svg";
 
 function PatientVaccineSummary({ user }) {
   const [vaccinations, setVaccinations] = useState([]);
@@ -31,8 +32,9 @@ function PatientVaccineSummary({ user }) {
   return (
     <div>
       <div className="vaccineSummaryTitleDiv">
-        <h1>{user.name}</h1>
-        <h3>Vaccine Summary</h3>
+        <h1 className="patientName">{user.name}</h1>
+        <img src={phone} alt="phone" className="phone" />
+        <h2>Vaccine Summary</h2>
         <div>
           {/* <PatientVaccineSummaryCard /> */}
           {displayVaccinations}

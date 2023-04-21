@@ -152,3 +152,49 @@
     padding: 80px 20px;
     }
     }
+
+    .button-47 {
+        align-items: center;
+        background-color: #0071F2;
+        border: 1px solid #DFDFDF;
+        border-radius: 8px;
+        box-sizing: border-box;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        font-family: Inter, sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        justify-content: center;
+        line-height: 20px;
+        max-width: 200px;
+        padding: 14px 22px;
+        text-decoration: none;
+        transition: all .2s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: 100%;
+        /* margin: auto; */
+      }
+      
+      .button-47:active,
+      .button-47:hover {
+        outline: 0;
+      }
+      
+      .button-47:hover {
+        background-color: white;
+        border-color: rgba(0, 0, 0, 0.19);
+        color: #0071F2;
+      }
+
+.form {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+    }
+
+
+      

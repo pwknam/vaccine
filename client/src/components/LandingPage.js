@@ -16,24 +16,24 @@ function LandingPage() {
   return (
     <div className="landingPage">
       <h1 className="landingPageTitle">
-        Welcome to Haiti's Vaccination Portal
+        Welcome to Flatiron's Vaccination Portal
       </h1>
-      <h2 style={{ color: "#2F2E41" }}>
+      {/* <h3 style={{ color: "#2F2E41" }}>
         Our current vaccination rate is at 50%. Please help us work towards a
         healthier future
-      </h2>
+      </h3> */}
       <div className="landingPageImage">
         <img
           src={vaccineImage}
           alt="Coronavirus Vaccine"
-          style={{ width: 600, height: 600 }}
+          className="imageClass2"
         />
       </div>
       <div className="landingPageButtonsDiv">
         <button className="button-46" onClick={handleClickPatient}>
           Patient
         </button>
-        <h3 className="or">or</h3>
+        {/* <h3 className="or">or</h3> */}
         <button className="button-46" onClick={handleClickInstitution}>
           Institution
         </button>

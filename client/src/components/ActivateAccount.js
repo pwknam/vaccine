@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
+import VaccineCard from "../images/VaccineCard.svg";
 
 function ActivateAccount({ setUser }) {
   const navigate = useNavigate();
@@ -34,40 +35,47 @@ function ActivateAccount({ setUser }) {
   }
 
   return (
-    <div className="setupInstitution">
-      <h1>Setup Institution</h1>
-      <form className="createAccountForm" onSubmit={onFormSubmit}>
-        <div className="formDiv">
-          <label className="formLabel">Username</label>
-          <input
-            type="text"
-            className="formInput"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
-          ></input>
-        </div>
-        <div className="formDiv">
-          <label className="formLabel">DL #</label>
-          <input
-            type="text"
-            className="formInput"
-            onChange={(e) => setDL(e.target.value)}
-            value={DL}
-          ></input>
-        </div>
+    <div className="container">
+      <div className="left">
+        <img src={VaccineCard} alt="vaccine_card" className="imageClass" />
+      </div>
+      <div className="right">
+        <div className="setupInstitution">
+          <h1>Activate Account</h1>
+          <form className="createAccountForm" onSubmit={onFormSubmit}>
+            <div className="formDiv">
+              <label className="formLabel">Username</label>
+              <input
+                type="text"
+                className="formInput"
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+              ></input>
+            </div>
+            <div className="formDiv">
+              <label className="formLabel">DL #</label>
+              <input
+                type="text"
+                className="formInput"
+                onChange={(e) => setDL(e.target.value)}
+                value={DL}
+              ></input>
+            </div>
 
-        <div className="formDiv">
-          <label className="formLabel">Set Password</label>
-          <input
-            type="password"
-            className="formInput"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          ></input>
-        </div>
+            <div className="formDiv">
+              <label className="formLabel">Set Password</label>
+              <input
+                type="password"
+                className="formInput"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              ></input>
+            </div>
 
-        <button className="createAccountButton">Activate Account</button>
-      </form>
+            <button className="button-47">Activate Account</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

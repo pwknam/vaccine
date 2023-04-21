@@ -2,6 +2,8 @@ import React from "react";
 import "../App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import InstitutionSignupLogin from "./InstitutionSignupLogin";
+import doctorWorking from "../images/institutionDashboard.svg";
+// import InstitutionDashboard from "./InstitutionDashboard";
 
 function InstitutionLandingPage() {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ function InstitutionLandingPage() {
       <div className="landingPage">
         <h1>Institution Portal</h1>
         {/* <h2 id="selection">Help us make Haiti a healthier place :)</h2> */}
+        <img src={doctorWorking} alt="doctors" className="doctorsWorking" />
         <div className="landingPageButtonsDiv">
           <div className="createContainer">
             <button className="button-46" onClick={handleCreateAccount}>
