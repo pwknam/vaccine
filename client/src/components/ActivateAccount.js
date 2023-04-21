@@ -24,8 +24,9 @@ function ActivateAccount({ setUser }) {
     .then((r) => {
       if (!r.ok) {
         throw new Error("Invalid Drivers License Number")
+      } else {
+        return r.json()
       }
-      r.json()
     })
     .then((data) => {
       setUser(data);
