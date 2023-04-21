@@ -25,7 +25,7 @@ function Login({ setNewUser }) {
         if (!r.ok) {
           throw new Error('Network response not okay')
         } else{
-          return r.json()
+          console.log(r)
         }
       })
       .then((data) => {
