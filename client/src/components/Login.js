@@ -21,7 +21,13 @@ function Login({ setNewUser }) {
         password: password,
       })
     })
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error('Network response not okay')
+        } else{
+          return r.json()
+        }
+      })
       .then((data) => {
         console.log(data);
         setNewUser(data);
