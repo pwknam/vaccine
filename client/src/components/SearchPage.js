@@ -13,12 +13,15 @@ function SearchPage({ setSearch, dl }) {
   };
 
   return (
+    <>
+    <Home setSearch={setSearch}/>
+
     <div className="searchContainer">
-      <h1>Search Patient</h1>
+      <h2>Or Search for License</h2>
       {/* <div className="landingPageImage">
         <img src={Search} alt="Search" style={{ width: 400, height: 400 }} />
       </div> */}
-      <form className="searchForm" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           className="bar"
@@ -29,8 +32,8 @@ function SearchPage({ setSearch, dl }) {
 
         <button className="button-47">Search</button>
       </form>
-      <Home setSearch={setSearch}/>
     </div>
+    </>
   );
 }
 
