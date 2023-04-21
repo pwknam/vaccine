@@ -11,7 +11,7 @@ function Login({ setNewUser }) {
 
   function handleLogin(e) {
     e.preventDefault();
-    fetch(`https://vaccine-pt72.onrender.com/login`, {
+    fetch(`/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
