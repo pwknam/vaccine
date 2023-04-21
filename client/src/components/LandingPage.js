@@ -13,6 +13,7 @@ function LandingPage() {
   function handleClickPatient() {
     navigate({ pathname: "/patientLandingPage" });
   }
+
   return (
     <div className="landingPage">
       <h1 className="landingPageTitle">
@@ -37,6 +38,7 @@ function LandingPage() {
         <button className="button-46" onClick={handleClickInstitution}>
           Institution
         </button>
+
       </div>
     </div>
   );

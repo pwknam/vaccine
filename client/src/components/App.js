@@ -72,6 +72,14 @@ function App() {
           <li>
             <Link to="/institutionLandingPage">Institution</Link>
           </li>
+          {user ? (
+              <li>
+                <Link to="/institutionLandingPage" onClick={() => setUser(null)}>Log Out</Link>
+              </li>
+            ) : (
+              <></>
+            )}
+         
         </ul>
       </nav>
       <Routes>
