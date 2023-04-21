@@ -90,8 +90,8 @@ function PatientDashboard({ DL, user, patient }) {
           </tbody>
         </table>
       </div>
-      <div className="container">
-        <div className="left1">
+      <div className="container2">
+        <div className="left2">
           <div className="landingPageImage">
             <img
               src={vaccineImage}
@@ -101,7 +101,7 @@ function PatientDashboard({ DL, user, patient }) {
             />
           </div>
         </div>
-        <div className="right">
+        <div className="right2">
           <div className="addNewContainer1">
             <h2>Add New Vaccine</h2>
             <form className="createAccountForm1" onSubmit={handleNewVaccine}>

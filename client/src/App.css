@@ -574,10 +574,8 @@ nav {
 
 .container {
   display: flex;
-  /* justify-content: space-between; */
   height: 100vh;
-  /* align-items: center; */
-  /* width: 100%; */
+
 }
 
 .left {
@@ -790,12 +788,12 @@ input {
   width: 100%;
 }
 
-.addNewContainer1{
+/* .addNewContainer1{
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-}
+} */
 
 .formDiv1{
   margin-bottom: 20px;
@@ -901,4 +899,29 @@ input {
   background-color: lightblue;
   margin-right: 1rem;
   margin-left: 1rem;
+}
+
+
+.container2 {
+  display: flex;
+  height: 100vh;
+  margin-top: 50px;
+
+}
+
+.left2 {
+  flex: 1;
+  width: 750px;
+  background-color: white;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: baseline; */
+}
+
+.right2 {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
