@@ -21,7 +21,7 @@ function Login({ setNewUser }) {
         password: password,
       })
     })
-      .then((r) => console.log(r))
+      .then((r) => r.json())
       .then((data) => {
         console.log(data);
         setNewUser(data);
