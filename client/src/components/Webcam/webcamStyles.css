@@ -41,8 +41,3 @@
     align-items: center;
     width: 100%;
   }
-
-  .webcam-img {
-    border-radius: 10px;
-    overflow: hidden;
-  }

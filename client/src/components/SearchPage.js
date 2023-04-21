@@ -13,30 +13,24 @@ function SearchPage({ setSearch, dl }) {
   };
 
   return (
-    <div>
-      <Home className="home" setSearch={setSearch}/>
-        {/* <div className="separator" /> */}
-     
-      <div className="searchContainer">
+    <div className="searchContainer">
+      <h1>Search Patient</h1>
+      {/* <div className="landingPageImage">
+        <img src={Search} alt="Search" style={{ width: 400, height: 400 }} />
+      </div> */}
+      <form className="searchForm" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          className="bar"
+          placeholder="Drivers License Number"
+          value={dl}
+          onChange={(e) => setSearch(e.target.value)}
+        ></input>
 
-      
-
-        <form className="searchForm" onSubmit={handleSubmit}>
-        <h2>Or Enter License Number</h2>
-          <input
-            type="text"
-            className="bar"
-            placeholder="Drivers License Number"
-            value={dl}
-            onChange={(e) => setSearch(e.target.value)}
-          ></input>
-          <button className="button-47">Search</button>
-        </form>
-      </div>
-
-
-
-      </div>
+        <button className="button-47">Search</button>
+      </form>
+      <Home setSearch={setSearch}/>
+    </div>
   );
 }
 

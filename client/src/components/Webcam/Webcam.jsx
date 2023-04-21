@@ -39,7 +39,6 @@ export const WebcamCapture = ({image, setImage}) => {
                     screenshotFormat="image/jpeg"
                     width={420}
                     videoConstraints={videoConstraints}
-                    style={{ borderRadius: '30px' }}
                 /> : <img src={image} />}
             </div>
             <div className='webcam-container'>
