@@ -51,7 +51,7 @@ export const WebcamCapture = ({image, setImage}) => {
                         e.preventDefault();
                         capture();
                     }}
-                        className="webcam-btn">Capture</button>
+                        className="button-47" >Capture</button>
                 }
             </div>
         </div>
