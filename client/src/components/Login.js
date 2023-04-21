@@ -10,9 +10,6 @@ function Login({ setNewUser }) {
   const navigate = useNavigate();
 
   function handleLogin(e) {
-    fetch(`/patients`)
-    .then(r => r.json())
-    .then(data => console.log(data))
     e.preventDefault();
     fetch(`/login`, {
       method: "POST",
