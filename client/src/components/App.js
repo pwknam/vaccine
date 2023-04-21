@@ -26,7 +26,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/check_session')
+    fetch('https://vaccine-pt72.onrender.com/check_session')
     .then(r => {
       if (r.ok) {
         r.json().then(data => {
