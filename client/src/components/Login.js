@@ -19,7 +19,7 @@ function Login({ setNewUser }) {
       body: JSON.stringify({
         username: name,
         password: password,
-      }),
+      })
     })
       .then((r) => r.json())
       .then((data) => {
