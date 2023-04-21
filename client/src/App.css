@@ -925,3 +925,8 @@ input {
   justify-content: center;
   align-items: flex-start;
 }
+
+.image99{
+  width: 300px;
+  margin-bottom: 40px;
+}

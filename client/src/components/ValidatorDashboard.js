@@ -2,6 +2,7 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 import VaccineRowIssuer from "./VaccineRowIssuer";
 import React, { useEffect, useState } from "react";
+import VaccineCard from "../images/VaccineCard.svg";
 
 function ValidatorDashboard({ dl, user }) {
   const navigate = useNavigate();
@@ -15,16 +16,16 @@ function ValidatorDashboard({ dl, user }) {
     fetch(`/patients/${dl}`)
       .then((r) => {
         if (!r.ok) {
-          throw new Error("Patient not found")
+          throw new Error("Patient not found");
         } else {
-          return r.json()
+          return r.json();
         }
       })
       .then((data) => {
         setPatientData(data);
         setVaccinations(data.vaccinations);
       })
-      .catch(error => alert(error.message))
+      .catch((error) => alert(error.message));
   }, [dl, user]);
 
   const renderVaccines = vaccinations
@@ -42,6 +43,7 @@ function ValidatorDashboard({ dl, user }) {
     <div className="institutionDashboardPage">
       <div className="topBar">
         <h1>{patientData.name}</h1>
+        <img src={VaccineCard} alt="vaccineCard" className="image99" />
         <button
           onClick={handleSearchPage}
           className="button-47"

@@ -21,17 +21,18 @@ function ActivateAccount({ setUser }) {
         password: password,
       }),
     })
-    .then((r) => {
-      if (!r.ok) {
-        throw new Error("Invalid Drivers License Number")
-      }
-      r.json()
-    })
-    .then((data) => {
-      setUser(data);
-      navigate({ pathname: "/patientVaccineSummary" });
-    })
-    .catch(error => alert(error.message))
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Invalid Drivers License Number");
+        } else {
+          return r.json();
+        }
+      })
+      .then((data) => {
+        setUser(data);
+        navigate({ pathname: "/patientVaccineSummary" });
+      })
+      .catch((error) => alert(error.message));
   }
 
   return (
