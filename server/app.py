@@ -48,7 +48,7 @@ api.add_resource(CheckSession, '/check_session')
 
 
 class Logout(Resource):
-    def delete(self):
+    def post(self):
         session['user_id'] = None
         session['user_role'] = None
         return {}, 204

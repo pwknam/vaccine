@@ -56,6 +56,13 @@ function App() {
   function setSearch(val) {
     setValidatorDL(val);
   }
+
+  function handleLogOut() {
+    fetch('/logout', {
+      method: "POST"
+    })
+    .then(window.location.reload()) 
+  }
   return (
     <div className="mainPage">
       <nav>
@@ -74,7 +81,7 @@ function App() {
           </li>
           {user ? (
               <li>
-                <Link to="/institutionLandingPage" onClick={() => setUser(null)}>Log Out</Link>
+                <Link to="/institutionLandingPage" onClick={handleLogOut}>Log Out</Link>
               </li>
             ) : (
               <></>
