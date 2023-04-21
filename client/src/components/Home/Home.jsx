@@ -41,11 +41,13 @@ const Home = ({ setSearch }) => {
         <form className="form">
             
             {loading ? (
-              <div class="la-ball-atom">
+              <div className="loading-spinner">
+              <div class="la-ball-atom la-3x">
               <div></div>
               <div></div>
               <div></div>
               <div></div>
+            </div>
             </div>
             
             ) : (<>
