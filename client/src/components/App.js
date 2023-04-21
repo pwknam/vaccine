@@ -61,7 +61,7 @@ function App() {
     fetch('/logout', {
       method: "POST"
     })
-    .then(window.location.reload()) 
+    .then(window.location.reload())
   }
   return (
     <div className="mainPage">
