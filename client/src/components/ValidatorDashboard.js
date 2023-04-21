@@ -24,8 +24,8 @@ function ValidatorDashboard({ dl, user }) {
       .then((data) => {
         setPatientData(data);
         setVaccinations(data.vaccinations);
-      })
-      .catch((error) => alert(error.message));
+      });
+    // .catch((error) => alert(error.message));
   }, [dl, user]);
 
   const renderVaccines = vaccinations

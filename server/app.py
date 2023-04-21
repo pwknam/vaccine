@@ -236,7 +236,7 @@ class PatientByID(Resource):
             for v in patient.vaccinations:
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
-            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name'))), 200)
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'id'))), 200)
         elif session.get('user_role') == 'Patient':
             patient.vaccinations = [v for v in Vaccination.query.filter(
                 Vaccination.patient_id == patient.id)]
@@ -244,7 +244,7 @@ class PatientByID(Resource):
                 v.expiration_date = v.expiration_date
                 v.issuer_name = v.issuers.name
                 v.vaccination_id = v.id
-            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'vaccinations.visibility', 'vaccinations.id'))), 200)
+            return make_response(jsonify(patient.to_dict(only=('name', 'vaccinations.expiration_date', 'vaccinations.name', 'vaccinations.issuer_name', 'vaccinations.visibility', 'vaccinations.id', 'id'))), 200)
         elif session.get('user_role') == 'Issuer':
             patient.vaccinations = [v for v in Vaccination.query.filter(
                 Vaccination.patient_id == patient.id)]

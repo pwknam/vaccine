@@ -37,8 +37,8 @@ function App() {
       } else {
         navigate("/");
       }
-    })
-  }, [])
+    });
+  }, []);
 
   function setNewUser(user) {
     setUser(user);
@@ -58,10 +58,9 @@ function App() {
   }
 
   function handleLogOut() {
-    fetch('/logout', {
-      method: "POST"
-    })
-    .then(window.location.reload())
+    fetch("/logout", {
+      method: "POST",
+    }).then(window.location.reload());
   }
   return (
     <div className="mainPage">
@@ -80,13 +79,14 @@ function App() {
             <Link to="/institutionLandingPage">Institution</Link>
           </li>
           {user ? (
-              <li>
-                <Link to="/institutionLandingPage" onClick={handleLogOut}>Log Out</Link>
-              </li>
-            ) : (
-              <></>
-            )}
-         
+            <li>
+              <Link to="/institutionLandingPage" onClick={handleLogOut}>
+                Log Out
+              </Link>
+            </li>
+          ) : (
+            <></>
+          )}
         </ul>
       </nav>
       <Routes>

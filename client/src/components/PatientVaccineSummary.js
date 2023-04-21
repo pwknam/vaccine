@@ -11,16 +11,16 @@ function PatientVaccineSummary({ user }) {
     fetch(`/patients/${user.dl_number}`)
       .then((r) => {
         if (!r.ok) {
-          throw new Error("Patient not found")
+          throw new Error("Patient not found");
         } else {
-          return r.json()
+          return r.json();
         }
       })
       .then((data) => {
         console.log(data.vaccinations);
         setVaccinations(data.vaccinations);
-      })
-      .catch(error => alert(error.message))
+      });
+    // .catch(error => alert(error.message))
   }, [user]);
 
   const displayVaccinations = vaccinations
