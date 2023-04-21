@@ -1,5 +1,0 @@
-routes:
-  - path: /*
-    destination:
-      proxy:
-        url: https://vaccine-pt72.onrender.com
