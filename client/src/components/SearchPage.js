@@ -14,10 +14,10 @@ function SearchPage({ setSearch, dl }) {
 
   return (
     <div className="searchContainer">
-      <h1>Search Patient or Upload License Photo</h1>
-      <div className="landingPageImage">
+      <h1>Search Patient</h1>
+      {/* <div className="landingPageImage">
         <img src={Search} alt="Search" style={{ width: 400, height: 400 }} />
-      </div>
+      </div> */}
       <form className="searchForm" onSubmit={handleSubmit}>
         <input
           type="text"

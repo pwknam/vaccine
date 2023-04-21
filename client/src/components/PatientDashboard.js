@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import VaccineRowIssuer from "./VaccineRowIssuer";
-import vaccineImage from "../images/CV.svg";
+import vaccineImage from "../images/injection.svg";
 
 function PatientDashboard({ DL, user, patient }) {
   const [patientData, setPatientData] = useState({});
@@ -61,10 +61,14 @@ function PatientDashboard({ DL, user, patient }) {
   }
 
   return (
-    <div>
+    <div className="institutionDashboardPage">
       <div className="topBar">
         <h1>{patientData.name}</h1>
-        <button onClick={handleDashboardNavigate} className="button-47">
+        <button
+          onClick={handleDashboardNavigate}
+          className="button-47"
+          style={{ marginBottom: "20px" }}
+        >
           Dashboard
         </button>
       </div>
@@ -87,12 +91,13 @@ function PatientDashboard({ DL, user, patient }) {
         </table>
       </div>
       <div className="container">
-        <div className="left">
+        <div className="left1">
           <div className="landingPageImage">
             <img
               src={vaccineImage}
               alt="Coronavirus Vaccine"
-              style={{ width: 600, height: 600 }}
+              // style={{ width: 600, height: 600 }}
+              className="imageClass2"
             />
           </div>
         </div>
@@ -120,21 +125,21 @@ function PatientDashboard({ DL, user, patient }) {
                   value={date}
                 ></input>
               </div>
+              <div className="formDiv1">
+                <label className="formLabel1">
+                  Email Patient Vaccine Confirmation
+                </label>
+                <input
+                  type="text"
+                  className="formInput1"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                ></input>
+              </div>
 
               <button className="button-47">Add Vaccine</button>
             </form>
           </div>
-        </div>
-        <div className="formDiv">
-          <label className="formLabel">
-            Email, If User wants to activate account
-          </label>
-          <input
-            type="text"
-            className="formInput"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          ></input>
         </div>
       </div>
     </div>

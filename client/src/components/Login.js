@@ -38,7 +38,8 @@ function Login({ setNewUser }) {
   return (
     <div className="container">
       <div className="left">
-        <img src={People} alt="People" style={{ width: 700, height: 700 }} />
+        {/* <img src={People} alt="People" style={{ width: 700, height: 700 }} /> */}
+        <img src={People} alt="People" className="imageClass" />
       </div>
       <div className="right">
         <div className="formContainer">
@@ -62,7 +63,7 @@ function Login({ setNewUser }) {
                 value={password}
               ></input>
             </div>
-            <button className="button-46">Login</button>
+            <button className="button-47">Login</button>
           </form>
         </div>
       </div>

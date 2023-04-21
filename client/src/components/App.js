@@ -26,20 +26,19 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/check_session')
-    .then(r => {
+    fetch("/check_session").then((r) => {
       if (r.ok) {
-        r.json().then(data => {
-          data.patients ? setNewUser(data) : setUser(data)
-          console.log(data)
-          setPatientDL(data.dl_number)
-          setValidatorDL(data.dl_number)
-        })
+        r.json().then((data) => {
+          data.patients ? setNewUser(data) : setUser(data);
+          console.log(data);
+          setPatientDL(data.dl_number);
+          setValidatorDL(data.dl_number);
+        });
       } else {
-        navigate('/')
+        navigate("/");
       }
-    })
-  }, [])
+    });
+  }, []);
 
   function setNewUser(user) {
     setUser(user);
@@ -63,7 +62,7 @@ function App() {
         <div class="logo">
           <Link to="/" id="navTitle">
             {/* <img src="medical-logo.png" alt="Medical Logo" /> */}
-            <h1>Haiti Vaccination Portal</h1>
+            <h1>Flatiron Vaccination Portal</h1>
           </Link>
         </div>
         <ul class="nav-links">
@@ -112,10 +111,13 @@ function App() {
           }
         />
         <Route path="/patientLandingPage" element={<PatientLandingPage />} />
-        <Route path="/activateAccount" element={<ActivateAccount setUser={setUser}/>} />
+        <Route
+          path="/activateAccount"
+          element={<ActivateAccount setUser={setUser} />}
+        />
         <Route
           path="/patientVaccineSummary"
-          element={<PatientVaccineSummary user={user}/>}
+          element={<PatientVaccineSummary user={user} />}
         />
         <Route
           path="/searchPage"
@@ -126,6 +128,7 @@ function App() {
           element={<ValidatorDashboard dl={validatorDL} user={user} />}
         />
       </Routes>
+      <div className="emptyDiv"></div>
     </div>
   );
 }

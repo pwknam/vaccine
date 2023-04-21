@@ -43,7 +43,7 @@
 }
 
 .mainPage{
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 
@@ -72,7 +72,7 @@
 .landingPageButtonsDiv{
   width: 30%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -82,7 +82,16 @@
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  width: 100%;
+  width: 80%;
+  margin-top: 50px;
+}
+
+.setupInstitution2{
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: 80%;
+  margin-top: 100px;
 }
 
 .createAccountForm{
@@ -134,23 +143,47 @@
 
 /* Institution Dashboard */
 
-.institutionDashboardPage{
+.institutionDashboardPage {
   display: flex;
   flex-direction: column;
-}
-
-.topBar{
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  /* height: 100vh; */
 }
 
-.searchBarDiv{
+.topBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 100%; */
+}
+
+.searchBarDiv {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-  
+  width: 100%;
+  max-width: 960px;
+  padding: 0 16px;
 }
+
+.patientCardGrid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.cardItem {
+  width: 25%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
 
 
 .bar{
@@ -163,20 +196,6 @@
   margin-bottom: 4px;
   /* color: red; */
 }
-
-.patientCardGrid{
- display: flex;
- flex-wrap: wrap;
- width: 75%;
- margin: 0 auto;
-}
-
-.cardItem{
-  width: 25%;
-  box-sizing: border-box;
-  padding: 10px;
-}
-
 
 
 /* Patient Card */
@@ -225,6 +244,8 @@ td{
   box-shadow: 0 1px 2px #0071F2;
   margin-bottom: 4px;
   padding: 8px;
+  align-items: center;
+  width: 80%;
 }
 
 /* SearchPage */
@@ -263,8 +284,11 @@ td{
 
 .cardContainer{
   border-radius: 8px;
-  border: 1px solid black;
+  border: 1px solid #0071F2;
   width: 500px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px #0071F2;
+
 }
 
 .cardTitle{
@@ -284,6 +308,7 @@ td{
 
 .cardDetailTitle{
  text-decoration: underline;
+ font-weight: bold;
 }
 
 /*toggle button*/
@@ -417,7 +442,7 @@ td{
 }
 
 .toggle-button.toggled {
-  background-color: #3f51b5;
+  background-color: #0071F2;
 }
 
 /* button design */
@@ -447,6 +472,7 @@ td{
   -webkit-user-select: none;
   touch-action: manipulation;
   width: 100%;
+  margin: 10px;
   /* margin: auto; */
 }
 
@@ -483,7 +509,6 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 10vh;
-  /* width: 100%; */
   padding: 0 10%;
   background-color: #fff;
   /* box-shadow: 0 4px 6px rgba(0,0,0,0.1); */
@@ -539,7 +564,7 @@ nav {
 }
 
 .landingPageTitle{
-  font-size: 60px;
+  font-size: 50px;
 }
 
 .createContainer{
@@ -549,8 +574,10 @@ nav {
 
 .container {
   display: flex;
-  height: 50vh;
+  /* justify-content: space-between; */
+  height: 100vh;
   /* align-items: center; */
+  /* width: 100%; */
 }
 
 .left {
@@ -558,15 +585,23 @@ nav {
   background-color: white;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
+}
+
+.left1 {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+  /* align-items: baseline; */
 }
 
 .right {
   flex: 1;
   background-color: white;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .formContainer {
@@ -574,7 +609,9 @@ nav {
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: cen;
+  justify-content: center;
+  margin-top: 100px;
+  /* align-items: cen; */
 }
 
 /* card */
@@ -716,7 +753,7 @@ input {
   font-weight: 500;
   font-size: 18px;
   justify-content: center;
-  line-height: 16px;
+  line-height: 20px;
   max-width: 200px;
   padding: 14px 22px;
   text-decoration: none;
@@ -787,5 +824,37 @@ input {
 .createAccountForm2{
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
+}
+
+.imageClass{
+  width: 600px;
+  height: 600px;
+}
+
+.imageClass2{
+  width: 500px;
+  height: 500px;
+}
+
+.emptyDiv{
+  margin-bottom: 50px;
+}
+
+.phone{
+  width: 100px;
+}
+
+.patientName{
+  font-size: 45px;
+}
+
+.healthyPeople{
+  width: 200px;
+  margin-bottom: 30px;
+}
+
+.doctorsWorking{
+  width: 300px;
+  margin-bottom: 30px;
 }

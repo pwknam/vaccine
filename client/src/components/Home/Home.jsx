@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { WebcamCapture} from '../Webcam/Webcam'
 import { useNavigate } from "react-router-dom";
+import "./homeStyles.css"
 
 
 const Home = ({setSearch}) => {
@@ -41,7 +42,7 @@ const Home = ({setSearch}) => {
        
                     <form className="form">
                         <WebcamCapture image={image} handleSubmit={handleSubmit} setImage = {setImage} />
-                        <button type="submit" id="login-button" onClick={(e) => handleSubmit(e)}>Submit</button>
+                        <button type="submit" className='button-47' onClick={(e) => handleSubmit(e)}>Submit</button>
                         {driverslicense && <h1>{driverslicense}</h1>}    
 
                     </form>

@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import "../App.css";
 
-function PatientVaccineSummaryCard({vaccination}) {
-  const [vaccinationVisibility, setVaccinationVisibility] = useState(vaccination.visibility)
-  console.log(vaccination)
+function PatientVaccineSummaryCard({ vaccination }) {
+  const [vaccinationVisibility, setVaccinationVisibility] = useState(
+    vaccination.visibility
+  );
+  console.log(vaccination);
 
   const handleToggle = () => {
     fetch(`/vaccinations/${vaccination.id}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "visibility": !vaccinationVisibility
-      })
+        visibility: !vaccinationVisibility,
+      }),
     })
-    .then(r => r.json())
-    .then(data => setVaccinationVisibility(data.visibility))
-    
+      .then((r) => r.json())
+      .then((data) => setVaccinationVisibility(data.visibility));
   };
 
   return (
@@ -39,7 +40,9 @@ function PatientVaccineSummaryCard({vaccination}) {
         <div className="cardDetail">
           <p className="cardDetailTitle">Privacy</p>
           <button
-            className={`toggle-button ${vaccinationVisibility ? "" : "toggled"}`}
+            className={`toggle-button ${
+              vaccinationVisibility ? "" : "toggled"
+            }`}
             onClick={handleToggle}
           >
             {vaccinationVisibility ? "Off" : "On"}
