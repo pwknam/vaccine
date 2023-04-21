@@ -34,6 +34,7 @@ const Home = ({setSearch}) => {
           .catch(error => {
             console.log(error);
           });
+          // navigate({ pathname: "/validatorDashboard" });
     }
 
 

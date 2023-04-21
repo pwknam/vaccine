@@ -26,11 +26,10 @@ function SearchPage({ setSearch, dl }) {
           value={dl}
           onChange={(e) => setSearch(e.target.value)}
         ></input>
-        {/* IF YOU WANT TO GET RID OF THE UGLY OCR THEN COMMENT OUT THE HOME COMPONENT - I NEED TO RENAME ANYWAYS */}
-        {/* <Home/> */}
+
         <button className="button-47">Search</button>
-        <Home setSearch={setSearch} />
       </form>
+      <Home setSearch={setSearch}/>
     </div>
   );
 }

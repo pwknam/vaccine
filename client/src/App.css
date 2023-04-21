@@ -858,3 +858,47 @@ input {
   width: 300px;
   margin-bottom: 30px;
 }
+
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.bar {
+  height: 2.5rem;
+  width: 20rem;
+  padding: 0.5rem;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.button-47 {
+  height: 2.5rem;
+  width: 8rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #3a3fda;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.separator {
+  width: 1px;
+  height: 100%;
+  background-color: lightblue;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
