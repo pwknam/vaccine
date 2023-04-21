@@ -20,7 +20,6 @@ with app.app_context():
     db.session.commit()
 
     p1 = Patient(name='Ian', dl_number=randint(100000000, 999999999))
-    p2 = Patient(name='Kyushik', dl_number=randint(100000000, 999999999))
     p3 = Patient(name='Michelle', dl_number=randint(100000000, 999999999))
     p4 = Patient(name='Sally', dl_number=randint(100000000, 999999999))
     p5 = Patient(name='Bill', dl_number=randint(100000000, 999999999))
@@ -35,7 +34,7 @@ with app.app_context():
     p14 = Patient(name='Jacob', dl_number=randint(100000000, 999999999))
     p15 = Patient(name='Nick', dl_number=randint(100000000, 999999999))
     p16 = Patient(name='Eshwar', dl_number=randint(100000000, 999999999))
-    patients = [p1, p2, p3, p4, p5, p6, p7, p8,
+    patients = [p1, p3, p4, p5, p6, p7, p8,
                 p9, p10, p11, p12, p13, p14, p15, p16]
     db.session.add_all(patients)
     db.session.commit()
@@ -69,18 +68,6 @@ with app.app_context():
                         name='Smallpox', expiration_date='12/31/2025', visibility=True)
     vacc6 = Vaccination(patient_id=p1.id, issuer_id=i1.id,
                         name='Measles', expiration_date='12/31/2025', visibility=True)
-    vacc7 = Vaccination(patient_id=p2.id, issuer_id=i2.id,
-                        name='Covid', expiration_date='12/31/2025', visibility=True)
-    vacc8 = Vaccination(patient_id=p2.id, issuer_id=i2.id,
-                        name='Flu', expiration_date='12/31/2025', visibility=False)
-    vacc9 = Vaccination(patient_id=p2.id, issuer_id=i2.id,
-                        name='Tetanus', expiration_date='12/31/2025', visibility=True)
-    vacc10 = Vaccination(patient_id=p2.id, issuer_id=i2.id,
-                         name='Polio', expiration_date='12/31/2025', visibility=True)
-    vacc11 = Vaccination(patient_id=p2.id, issuer_id=i2.id,
-                         name='Smallpox', expiration_date='12/31/2025', visibility=True)
-    vacc12 = Vaccination(patient_id=p2.id, issuer_id=i2.id,
-                         name='Measles', expiration_date='12/31/2025', visibility=True)
     vacc13 = Vaccination(patient_id=p3.id, issuer_id=i3.id,
                          name='Covid', expiration_date='12/31/2025', visibility=True)
     vacc14 = Vaccination(patient_id=p3.id, issuer_id=i3.id,
@@ -249,13 +236,12 @@ with app.app_context():
                          name='Smallpox', expiration_date='12/31/2025', visibility=True)
     vacc96 = Vaccination(patient_id=p16.id, issuer_id=i1.id,
                          name='Measles', expiration_date='12/31/2025', visibility=True)
-    vaccinations = [vacc1, vacc2, vacc3, vacc4, vacc5, vacc6, vacc7, vacc8, vacc9, vacc10, vacc11, vacc12, vacc13, vacc14, vacc15, vacc16, vacc17, vacc18, vacc19, vacc20, vacc21, vacc22, vacc23, vacc24, vacc25, vacc26, vacc27, vacc28, vacc29, vacc30, vacc31, vacc32, vacc33, vacc34, vacc35, vacc36, vacc37, vacc38, vacc39, vacc40, vacc41, vacc42, vacc43, vacc44, vacc45, vacc46, vacc47, vacc48,
+    vaccinations = [vacc1, vacc2, vacc3, vacc4, vacc5, vacc6, vacc13, vacc14, vacc15, vacc16, vacc17, vacc18, vacc19, vacc20, vacc21, vacc22, vacc23, vacc24, vacc25, vacc26, vacc27, vacc28, vacc29, vacc30, vacc31, vacc32, vacc33, vacc34, vacc35, vacc36, vacc37, vacc38, vacc39, vacc40, vacc41, vacc42, vacc43, vacc44, vacc45, vacc46, vacc47, vacc48,
                     vacc49, vacc50, vacc51, vacc52, vacc53, vacc54, vacc55, vacc56, vacc57, vacc58, vacc59, vacc60, vacc61, vacc62, vacc63, vacc64, vacc65, vacc66, vacc67, vacc68, vacc69, vacc70, vacc71, vacc72, vacc73, vacc74, vacc75, vacc76, vacc77, vacc78, vacc79, vacc80, vacc81, vacc82, vacc83, vacc84, vacc85, vacc86, vacc87, vacc88, vacc89, vacc90, vacc91, vacc92, vacc93, vacc94, vacc95, vacc96]
     db.session.add_all(vaccinations)
     db.session.commit()
 
     u1 = User(username='Ian', role="Patient")
-    u2 = User(username='Kyushik', role="Patient")
     u3 = User(username='Michelle', role="Patient")
     u4 = User(username='Sally', role="Patient")
     u5 = User(username='Bill', role="Patient")
@@ -277,7 +263,6 @@ with app.app_context():
     u21 = User(username='MET', role="Validator")
     u22 = User(username='Columbia University', role="Validator")
     u1.password_hash = 'test123'
-    u2.password_hash = 'test123'
     u3.password_hash = 'test123'
     u4.password_hash = 'test123'
     u5.password_hash = 'test123'
@@ -298,13 +283,12 @@ with app.app_context():
     u20.password_hash = 'test123'
     u21.password_hash = 'test123'
     u22.password_hash = 'test123'
-    users = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11,
+    users = [u1, u3, u4, u5, u6, u7, u8, u9, u10, u11,
              u12, u13, u14, u15, u16, u17, u18, u19, u20, u21, u22]
     db.session.add_all(users)
     db.session.commit()
 
     p1.user_id = u1.id
-    p2.user_id = u2.id
     p3.user_id = u3.id
     p4.user_id = u4.id
     p5.user_id = u5.id
