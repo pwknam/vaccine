@@ -12,14 +12,19 @@ function ValidatorDashboard({ dl, user }) {
   }
 
   useEffect(() => {
-    console.log(dl, user.role);
     fetch(`/patients/${dl}`)
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Patient not found")
+        } else {
+          return r.json()
+        }
+      })
       .then((data) => {
-        console.log(data);
         setPatientData(data);
         setVaccinations(data.vaccinations);
-      });
+      })
+      .catch(error => alert(error.message))
   }, [dl, user]);
 
   const renderVaccines = vaccinations

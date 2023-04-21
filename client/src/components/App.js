@@ -39,6 +39,7 @@ function App() {
         navigate('/')
       }
     })
+    .catch(error => console.log(error))
   }, [])
 
   function setNewUser(user) {

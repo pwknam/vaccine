@@ -32,7 +32,13 @@ function CreateAccount({ setNewUser }) {
         }),
       }
     )
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Username already taken")
+        } else {
+          return r.json()
+        }
+      })
       .then((data) => {
         console.log(setNewUser, data);
         setNewUser(data);
@@ -41,7 +47,8 @@ function CreateAccount({ setNewUser }) {
             option === "Issuer" ? "/institutionDashboard" : "/searchPage"
           }`,
         });
-      });
+      })
+      .catch(error => alert(error.message))
   }
 
   return (

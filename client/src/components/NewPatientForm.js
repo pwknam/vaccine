@@ -20,9 +20,18 @@ function NewPatientForm({ setNewPatient }) {
         dl_number: dl_number,
       }),
     })
-      .then((r) => r.json())
-      .then((data) => setNewPatient(data));
-    navigate({ pathname: "/institutionDashboard" });
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Username already taken")
+        } else {
+          return r.json()
+        }
+      })
+      .then((data) => {
+        setNewPatient(data)
+        navigate({ pathname: "/institutionDashboard" });
+      })
+      .catch(error => alert(error.message))
   }
 
   return (

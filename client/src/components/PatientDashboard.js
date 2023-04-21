@@ -20,7 +20,13 @@ function PatientDashboard({ DL, user, patient }) {
 
   useEffect(() => {
     fetch(`/patients/${DL}`)
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Patient not found")
+        } else {
+          return r.json()
+        }
+      })
       .then((data) => {
         setPatientData(data);
         setVaccinations(data.vaccinations);
@@ -38,9 +44,7 @@ function PatientDashboard({ DL, user, patient }) {
     : null;
 
   function handleNewVaccine(e) {
-    console.log(user.issuer_id);
     e.preventDefault();
-
     fetch(`/vaccinations`, {
       method: "POST",
       headers: {

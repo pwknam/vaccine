@@ -21,18 +21,24 @@ function Login({ setNewUser }) {
         password: password,
       }),
     })
-      .then((r) => r.json())
-      .then((data) => {
-        console.log(data);
-        setNewUser(data);
-        if (data.role === "Issuer") {
-          navigate({ pathname: "/institutionDashboard" });
-        } else if (data.role === "Validator") {
-          navigate({ pathname: "/searchPage" });
-        } else if (data.role === "Patient") {
-          navigate({ pathname: "/PatientVaccineSummary" });
-        }
-      });
+    .then((r) => {
+      if (!r.ok) {
+        throw new Error("Invalid Username or Password")
+      } else {
+        return r.json()
+      }
+    })
+    .then((data) => {
+      setNewUser(data);
+      if (data.role === "Issuer") {
+        navigate({ pathname: "/institutionDashboard" });
+      } else if (data.role === "Validator") {
+        navigate({ pathname: "/searchPage" });
+      } else if (data.role === "Patient") {
+        navigate({ pathname: "/PatientVaccineSummary" });
+      }
+    })
+    .catch(error => alert(error.message))
   }
 
   return (

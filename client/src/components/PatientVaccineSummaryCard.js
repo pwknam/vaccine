@@ -15,9 +15,15 @@ function PatientVaccineSummaryCard({vaccination}) {
         "visibility": !vaccinationVisibility
       })
     })
-    .then(r => r.json())
+    .then(r => {
+      if (!r.ok) {
+        throw new Error("Vaccination not found")
+      } else {
+        return r.json()
+      }
+    })
     .then(data => setVaccinationVisibility(data.visibility))
-    
+    .catch(error => alert(error.message))
   };
 
   return (
