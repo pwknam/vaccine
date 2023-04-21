@@ -37,8 +37,8 @@ function App() {
       } else {
         navigate("/");
       }
-    });
-  }, []);
+    })
+  }, [])
 
   function setNewUser(user) {
     setUser(user);

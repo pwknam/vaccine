@@ -20,18 +20,19 @@ function PatientDashboard({ DL, user, patient }) {
 
   useEffect(() => {
     fetch(`/patients/${DL}`)
-      .then((r) => {
-        if (!r.ok) {
-          throw new Error("Patient not found")
-        } else {
-          return r.json()
-        }
-      })
-      .then((data) => {
-        setPatientData(data);
-        setVaccinations(data.vaccinations);
-      });
-  }, [DL, user]);
+    .then((r) => {
+      if (!r.ok) {
+        throw new Error("Patient not found")
+      } else {
+        return r.json()
+      }
+    })
+    .then((data) => {
+      setPatientData(data);
+      setVaccinations(data.vaccinations);
+    })
+    .catch(error => alert(error.message))
+}, [DL, user]);
 
   console.log(user.id);
 
@@ -43,26 +44,26 @@ function PatientDashboard({ DL, user, patient }) {
       })
     : null;
 
-  function handleNewVaccine(e) {
-    e.preventDefault();
-    fetch(`/vaccinations`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        expiration_date: date,
-        email: email,
-        issuer_id: user.issuer_id,
-        patient_id: patient.id,
-      }),
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        setVaccinations([...vaccinations, data]);
-      });
-  }
+    function handleNewVaccine(e) {
+      e.preventDefault();
+      fetch(`/vaccinations`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          expiration_date: date,
+          email: email,
+          issuer_id: user.issuer_id,
+          patient_id: patient.id,
+        }),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          setVaccinations([...vaccinations, data]);
+        });
+    }
 
   return (
     <div className="institutionDashboardPage">
