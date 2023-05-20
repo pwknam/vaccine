@@ -37,7 +37,6 @@ class Patient(db.Model, SerializerMixin):
 
     vaccinations = db.relationship('Vaccination', backref='patients')
     issuers = association_proxy('vaccinations', 'issuer')
-    # vaccines = association_proxy('vaccinations', 'vaccine')
 
 
 class Issuer(db.Model, SerializerMixin):
@@ -55,24 +54,6 @@ class Issuer(db.Model, SerializerMixin):
 
     vaccinations = db.relationship('Vaccination', backref='issuers')
     patients = association_proxy('vaccinations', 'patient')
-    # vaccines = association_proxy('vaccinations', 'vaccine')
-
-# class Vaccine(db.Model, SerializerMixin):
-#     __tablename__ = 'vaccines'
-
-#     serialize_rules = ('-vaccinations', '-created_at', '-updated_at')
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String)
-#     created_at = db.Column(db.DateTime, server_default=db.func.now())
-#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-
-#     vaccinations = db.relationship('Vaccination', backref='vaccines')
-#     patients = association_proxy('vaccinations', 'patient')
-#     issuers = association_proxy('vaccinations', 'issuer')
-
-    # logic behind conditional rendering for vaccine visibility is to
-
 
 class Validator(db.Model, SerializerMixin):
     __tablename__ = 'validators'

@@ -32,6 +32,8 @@ pillow==9.5.0 ; python_version >= '3.7'
 pipenv==2023.4.20
 platformdirs==3.2.0 ; python_version >= '3.7'
 psycopg2==2.9.6
+psycopg2-binary==2.9.6
+python-dotenv==1.0.0
 pytz==2023.3
 rfc3986[idna2008]==1.5.0
 setuptools==67.7.0 ; python_version >= '3.7'
