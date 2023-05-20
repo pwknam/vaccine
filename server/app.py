@@ -1,4 +1,4 @@
-from flask import request, make_response, jsonify, session
+from flask import request, make_response, jsonify, session, render_template
 from flask_restful import Resource
 from models import Issuer, Patient, Vaccination, User, Validator
 from config import app, db, api
@@ -12,6 +12,10 @@ from email.message import EmailMessage
 
 app.secret_key = b'kyushikiscool'
 
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template('index.html')
 
 class CheckSession(Resource):
     def get(self):
