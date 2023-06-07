@@ -27,6 +27,8 @@ During Covid-19, in order to gain entry into establishments and institutions, pe
 
 But even before Covid-19, institutions such as schools or corporations required up-to-date vaccine history. Students and employees would have to contact their primary care physician and ask them to send either digital scans or physical copies of patient vaccine information. This communication process was inefficient and difficult to manage for institutions requesting this information.
 
+Our team decided to create a seamless system where patient identification was tied to their drivers license, a not easily forgeable document that everyone always carries with them when they leave their home.
+
 ### How It's Made
 
 **Technologies Used:**
@@ -43,9 +45,14 @@ But even before Covid-19, institutions such as schools or corporations required 
 2. Patients can manage the privacy control of their vaccine history.
 3. Institutions can search patients and view their vaccine history for access control.
 
+### How does thei application solve the problem?
+
+- Patients, providers, and institutions & commercial establishments can easily digitally manage and verify vaccine records with just a patient’s name or driver's license number.
+- Patients can also manage the privacy control of their vaccine information in order to prevent institutions from viewing specific vaccines that are not necessary for the institutions’ access control.
+
 ## Getting Started
 
-**Installation**
+**Installation and Usage**
 
 First, navigate into the client directory
 
@@ -64,3 +71,28 @@ Then, run the client.
 ```
 npm run start
 ```
+
+Secondly, open another terminal tab and navigate into the server directory.
+
+```
+asdf
+```
+
+blah blah blah
+
+```
+asdf
+```
+
+## Personal Contributions
+
+1. Designed the MVP UX Journey
+2. Designed the lo-fi and hi0fi wireframes in Figma
+3. Developed the frontend
+   - Pages
+   - Components
+4. Developed API endpoints to send data to the frontend
+
+## Personal Goals
+
+My goal for this project was to gain experience working in a small team of engineers to build a full-stack CRUD web-application with React and Python & Flask.
