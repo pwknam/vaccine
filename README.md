@@ -54,7 +54,7 @@ Our team decided to create a seamless system where patient identification was ti
 
 **Installation and Usage**
 
-First, navigate into the client directory
+**_First, navigate into the client directory_**
 
 ```
 cd client
@@ -72,16 +72,16 @@ Then, run the client.
 npm run start
 ```
 
-Secondly, open another terminal tab and navigate into the server directory.
+**_Secondly, open another terminal tab and navigate into the server directory._**
 
 ```
-asdf
+pipenv install
 ```
 
-blah blah blah
+Then, run the server.
 
 ```
-asdf
+python app.py
 ```
 
 ## Personal Contributions
