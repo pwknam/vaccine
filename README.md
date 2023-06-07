@@ -18,7 +18,7 @@
 <br/>
 
 <p align="center">
-  <img src="client/public/Screenshot 2023-06-07 at 9.36.39 AM.png" width="50%" alt="space app recording"/>
+  <img src="client/public/Screenshot 2023-06-07 at 9.36.39 AM.png" width="75%" alt="space app recording"/>
 </p>
 
 ### Why I developed the product?
