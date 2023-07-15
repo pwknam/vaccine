@@ -7,7 +7,7 @@
   <p align="center">
     An electronic health record system for vaccinations. 
     <br />
-    <a href="https://youtube.com"><strong>Product Demo Video »</strong></a>
+<!--     <a href="https://youtube.com"><strong>Product Demo Video »</strong></a> -->
     <br />
     <br />
   </p>
