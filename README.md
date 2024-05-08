@@ -46,7 +46,7 @@ Our team decided to create a seamless system where patient identification was ti
 2. Patients can manage the privacy control of their vaccine history.
 3. Institutions can search patients and view their vaccine history for access control.
 
-### How does thei application solve the problem?
+### How does the application solve the problem?
 
 - Patients, providers, and institutions & commercial establishments can easily digitally manage and verify vaccine records with just a patient’s name or driver's license number.
 - Patients can also manage the privacy control of their vaccine information in order to prevent institutions from viewing specific vaccines that are not necessary for the institutions’ access control.
